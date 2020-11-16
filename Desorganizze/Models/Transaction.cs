@@ -2,7 +2,7 @@
 
 namespace Desorganizze.Models
 {
-    public enum Type
+    public enum TransactionType
     {
         Add,
         Subtract
@@ -11,15 +11,15 @@ namespace Desorganizze.Models
     public class Transaction
     {
         public virtual Guid Id { get; }
-        public virtual Type Type { get; }
+        public virtual TransactionType Type { get; }
         public virtual DateTime CreatedDate { get; }
         public virtual Money TotalAmount { get; }
-        public virtual Account Account { get; private set; }
-        public virtual bool IsAdding => Type == Type.Add;
+        public virtual Account Account { get; protected set; }
+        public virtual bool IsAdding => Type == TransactionType.Add;
 
         protected Transaction() {}
 
-        public Transaction(int totalAmount, Type type, Account account)
+        public Transaction(int totalAmount, TransactionType type, Account account)
         {
             Id = Guid.NewGuid();
             Type = type;

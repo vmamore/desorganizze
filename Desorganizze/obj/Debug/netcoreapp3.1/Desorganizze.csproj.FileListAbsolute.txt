@@ -70,7 +70,14 @@ C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\staticwebasset
 C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\staticwebassets\Desorganizze.StaticWebAssets.xml
 C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.genruntimeconfig.cache
 C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Desorganizze.pdb
-C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csproj.CoreCompileInputs.cache
-C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cache
 C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.dll
 C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.pdb
+C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csproj.CoreCompileInputs.cache
+C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cs
+C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cache
+C:\Labs\Estudos\Desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\Desorganizze.xml
+C:\Labs\Estudos\Desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.xml

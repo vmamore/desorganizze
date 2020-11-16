@@ -2,7 +2,7 @@
 
 namespace Desorganizze.Infra.Migrations
 {
-    [Migration(2020100820201126)]
+    [Migration(1)]
     public class AddUserTable : Migration
     {
         public override void Up()

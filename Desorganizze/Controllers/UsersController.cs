@@ -15,11 +15,11 @@ namespace Desorganizze.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly ISession _session;
-        public UsersController(ISession session)
-        {
-            _session = session;
-        }
+            private readonly ISession _session;
+            public UsersController(ISession session)
+            {
+                _session = session;
+            }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -47,6 +47,23 @@ namespace Desorganizze.Controllers
             return Ok(userPersisted);
         }
 
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /users/login
+        ///     {
+        ///        "username": "vmamore",
+        ///        "password": "mamore123"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="userDto"></param>
+        /// <returns>A token to access</returns>
+        /// <response code="200">Returns a new token</response>
+        /// <response code="404">The login/password aren't valid</response>  
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -60,7 +77,7 @@ namespace Desorganizze.Controllers
                                           u.Password == userDto.Password);
 
             if (userPersisted == null)
-                return BadRequest($"{userDto.Username} não existe.");
+                return NotFound($"{userDto.Username} não existe.");
 
             var token = TokenService.GenerateToken(userPersisted);
 
@@ -68,21 +85,18 @@ namespace Desorganizze.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] UserDto userDto)
         {
             if (!ModelState.IsValid) return BadRequest();
 
             var userPersisted = await _session.Query<User>()
-                .FirstAsync(u => u.Username == userDto.Username);
+                .FirstOrDefaultAsync(u => u.Username == userDto.Username);
 
             if (userPersisted != null)
                 return BadRequest($"{userDto.Username} já está sendo utilizado.");
 
-            var user = new User
-            {
-                Username = userDto.Username,
-                Password = userDto.Password
-            };
+            var user = new User(userDto.Username, userDto.Password);
 
             await _session.SaveAsync(user);
 

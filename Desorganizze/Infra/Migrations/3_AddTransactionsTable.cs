@@ -2,7 +2,7 @@
 
 namespace Desorganizze.Infra.Migrations
 {
-    [Migration(2020102222421126)]
+    [Migration(3)]
     public class AddTransactionsTable : Migration
     {
         public override void Up()
@@ -11,7 +11,12 @@ namespace Desorganizze.Infra.Migrations
                 .WithColumn("id").AsGuid().PrimaryKey()
                 .WithColumn("type").AsByte().NotNullable()
                 .WithColumn("created_date").AsDateTime().NotNullable()
-                .WithColumn("money_amount").AsInt64().NotNullable();
+                .WithColumn("money_amount").AsInt64().NotNullable()
+                .WithColumn("account_id").AsInt64().NotNullable();
+
+            Create.ForeignKey("FK_transactions_accounts_id")
+                .FromTable("transactions").ForeignColumn("account_id")
+                .ToTable("accounts").PrimaryColumn("id");
         }
 
         public override void Down()

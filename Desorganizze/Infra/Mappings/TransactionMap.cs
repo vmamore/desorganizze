@@ -11,7 +11,8 @@ namespace Desorganizze.Infra.Mappings
             Map(x => x.Type).Column("type");
             Map(x => x.CreatedDate).Column("created_date");
             References(x => x.Account)
-                .Column("AccountId");
+                .Column("account_id")
+                .Cascade.All();
             Component(x => x.TotalAmount, m =>
             {
                 m.Map(x => x.Amount, "money_amount");

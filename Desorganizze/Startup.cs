@@ -1,4 +1,3 @@
-using Desorganizze.Infra;
 using Desorganizze.Infra.Extensions;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
@@ -36,9 +35,19 @@ namespace Desorganizze
                     {
                         options.JsonSerializerOptions.IgnoreNullValues = true;
                     });
+
+            services.AddSwagger();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Desorganizze API");
+                c.RoutePrefix = string.Empty;
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

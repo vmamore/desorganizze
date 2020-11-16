@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Desorganizze.Models
 {
     public class Account
     {
-        public virtual int Id { get; private set; }
-        public virtual User User { get; private set; }
-        private List<Transaction> _transactions;
-        public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
+        public virtual int Id { get; protected set; }
+        public virtual int UserId { get; protected set; }
+        public virtual User User { get; protected set; }
+        private readonly IList<Transaction> _transactions;
+        public virtual IReadOnlyCollection<Transaction> Transactions { get; protected set; }
 
-        public Money GetBalance
+        public virtual Money GetBalance
         {
             get
             {
@@ -24,12 +24,16 @@ namespace Desorganizze.Models
             }
         }
 
+        public Account() {}
+
         public Account(User user)
         {
+            _transactions = new List<Transaction>();
+            Transactions = (_transactions as List<Transaction>).AsReadOnly();
             User = user;
         }
 
-        public void NewTransaction(int amount, Type type)
+        public virtual Transaction NewTransaction(int amount, TransactionType type)
         {
             var transaction = new Transaction(amount, type, this);
 
@@ -39,6 +43,8 @@ namespace Desorganizze.Models
                 throw new AccountCannotHaveNegativeBalance();
 
             _transactions.Add(transaction);
+
+            return transaction;
         }
     }
 }

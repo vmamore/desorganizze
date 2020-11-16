@@ -7,9 +7,12 @@ namespace Desorganizze.Infra.Mappings
     {
         public AccountMap()
         {
-            Id(acc => acc.Id).Column("id");
-            References(acc => acc.User, "UserId");
-            HasMany(x => x.Transactions);
+            Id(acc => acc.Id)
+                .GeneratedBy.Identity()
+                .Column("id");
+            References(x => x.User, "user_id").Unique();
+            HasMany(x => x.Transactions)
+                .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore);
             Table("accounts");
         }
     }

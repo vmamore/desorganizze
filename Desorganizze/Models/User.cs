@@ -2,10 +2,10 @@
 {
     public class User
     {
-        public virtual int Id { get; private set; }
-        public virtual string Username { get; private set; }
-        public virtual string Password { get; private set; }
-        public virtual Account Account { get; private set; }
+        public virtual int Id { get; protected set; }
+        public virtual string Username { get; protected set; }
+        public virtual string Password { get; protected set; }
+        public virtual Account Account { get; protected set; }
 
         protected User() {}
 
