@@ -18,7 +18,7 @@ namespace Desorganizze.Models
             {
                 return _transactions
                     .OrderBy(t => t.CreatedDate)
-                    .Aggregate(Money.Create(0), (current, credit) =>
+                    .Aggregate(Money.Zero(), (current, credit) =>
                     Money.Create(
                     credit.IsAdding ? credit.TotalAmount.Amount : -credit.TotalAmount.Amount
                     + current.Amount));
