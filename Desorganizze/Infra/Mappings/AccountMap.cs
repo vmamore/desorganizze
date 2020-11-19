@@ -12,7 +12,10 @@ namespace Desorganizze.Infra.Mappings
                 .Column("id");
             References(x => x.User, "user_id").Unique();
             HasMany(x => x.Transactions)
-                .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore);
+                .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore)
+                .KeyColumn("account_id")
+                .Inverse()
+                .Cascade.SaveUpdate();
             Table("accounts");
         }
     }

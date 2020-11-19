@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Desorganizze.Models
@@ -9,31 +10,30 @@ namespace Desorganizze.Models
         public virtual int UserId { get; protected set; }
         public virtual User User { get; protected set; }
         private readonly IList<Transaction> _transactions;
-        public virtual IReadOnlyCollection<Transaction> Transactions { get; protected set; }
+        public virtual IReadOnlyCollection<Transaction> Transactions => new ReadOnlyCollection<Transaction>(_transactions);
 
         public virtual Money GetBalance
         {
             get
             {
-                var total = Money.Create(0);
-
-                return _transactions.Aggregate(total, (current, credit) =>
+                return _transactions
+                    .OrderBy(t => t.CreatedDate)
+                    .Aggregate(Money.Create(0), (current, credit) =>
                     Money.Create(
                     credit.IsAdding ? credit.TotalAmount.Amount : -credit.TotalAmount.Amount
                     + current.Amount));
             }
         }
 
-        public Account() {}
+        protected Account() { }
 
         public Account(User user)
         {
             _transactions = new List<Transaction>();
-            Transactions = (_transactions as List<Transaction>).AsReadOnly();
             User = user;
         }
 
-        public virtual Transaction NewTransaction(int amount, TransactionType type)
+        public virtual Transaction NewTransaction(decimal amount, TransactionType type)
         {
             var transaction = new Transaction(amount, type, this);
 

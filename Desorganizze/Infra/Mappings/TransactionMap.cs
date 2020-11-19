@@ -7,12 +7,14 @@ namespace Desorganizze.Infra.Mappings
     {
         public TransactionMap()
         {
-            Id(x => x.Id).Column("id");
-            Map(x => x.Type).Column("type");
+            Id(x => x.Id)
+                .Column("id")
+                .GeneratedBy.Assigned();
+            Map(x => x.Type).CustomType<int>().Column("type");
             Map(x => x.CreatedDate).Column("created_date");
             References(x => x.Account)
-                .Column("account_id")
-                .Cascade.All();
+                .Class<Account>()
+                .Column("account_id");
             Component(x => x.TotalAmount, m =>
             {
                 m.Map(x => x.Amount, "money_amount");

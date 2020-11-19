@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Desorganizze.Dtos
 {
     public class TransactionDto
     {
-        public int Amount { get; set; }
+        [Required]
+        [Range(0.01, double.MaxValue)]
+        public decimal Amount { get; set; }
+        [Required]
         public byte Type { get; set; }
+        [Required]
         public int AccountId { get; set; }
     }
 }

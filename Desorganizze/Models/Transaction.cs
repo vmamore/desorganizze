@@ -19,7 +19,7 @@ namespace Desorganizze.Models
 
         protected Transaction() {}
 
-        public Transaction(int totalAmount, TransactionType type, Account account)
+        public Transaction(decimal totalAmount, TransactionType type, Account account)
         {
             Id = Guid.NewGuid();
             Type = type;

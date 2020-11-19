@@ -29,7 +29,9 @@ namespace Desorganizze.Controllers
 
             var transactionCreated = accountPersited.NewTransaction(transactionDto.Amount, (TransactionType)transactionDto.Type);
 
-            await _session.UpdateAsync(accountPersited);
+            using var transaction = _session.BeginTransaction();
+            await _session.SaveOrUpdateAsync(accountPersited);
+            await transaction.CommitAsync();
 
             return Created($"transactions/{transactionCreated.Id}", transactionDto);
         }
