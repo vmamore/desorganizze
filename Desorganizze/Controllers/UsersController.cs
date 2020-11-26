@@ -1,5 +1,4 @@
 ﻿using Desorganizze.Dtos;
-using Desorganizze.Infra;
 using Desorganizze.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +14,11 @@ namespace Desorganizze.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-            private readonly ISession _session;
-            public UsersController(ISession session)
-            {
-                _session = session;
-            }
+        private readonly ISession _session;
+        public UsersController(ISession session)
+        {
+            _session = session;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -45,43 +44,6 @@ namespace Desorganizze.Controllers
                 return NotFound();
 
             return Ok(userPersisted);
-        }
-
-        /// <summary>
-        /// Login
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /users/login
-        ///     {
-        ///        "username": "vmamore",
-        ///        "password": "mamore123"
-        ///     }
-        ///
-        /// </remarks>
-        /// <param name="userDto"></param>
-        /// <returns>A token to access</returns>
-        /// <response code="200">Returns a new token</response>
-        /// <response code="404">The login/password aren't valid</response>  
-        [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromBody] UserDto userDto)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var userPersisted = await _session
-                .Query<User>()
-                .FirstOrDefaultAsync(u => u.Username == userDto.Username &&
-                                          u.Password == userDto.Password);
-
-            if (userPersisted == null)
-                return NotFound($"{userDto.Username} não existe.");
-
-            var token = TokenService.GenerateToken(userPersisted);
-
-            return Ok(new { username = userDto.Username, token });
         }
 
         [HttpPost]

@@ -4,7 +4,7 @@
         <name>Desorganizze</name>
     </assembly>
     <members>
-        <member name="M:Desorganizze.Controllers.UsersController.Authenticate(Desorganizze.Dtos.UserDto)">
+        <member name="M:Desorganizze.Controllers.LoginController.Authenticate(Desorganizze.Dtos.LoginDto)">
              <summary>
              Login
              </summary>

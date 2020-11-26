@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Labs\\Estudos\\Desorganizze\\Desorganizze\\Desorganizze.csproj": {}
+    "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\Desorganizze.csproj": {}
   },
   "projects": {
-    "C:\\Labs\\Estudos\\Desorganizze\\Desorganizze\\Desorganizze.csproj": {
+    "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\Desorganizze.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Labs\\Estudos\\Desorganizze\\Desorganizze\\Desorganizze.csproj",
+        "projectUniqueName": "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\Desorganizze.csproj",
         "projectName": "Desorganizze",
-        "projectPath": "C:\\Labs\\Estudos\\Desorganizze\\Desorganizze\\Desorganizze.csproj",
-        "packagesPath": "C:\\Users\\viniciusmamore\\.nuget\\packages\\",
-        "outputPath": "C:\\Labs\\Estudos\\Desorganizze\\Desorganizze\\obj\\",
+        "projectPath": "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\Desorganizze.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\viniciusmamore\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -108,7 +108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
