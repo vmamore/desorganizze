@@ -1,10 +1,24 @@
+<h1 align="center">Desorganizze</h1>
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/icon.png" alt="Logo" width="80" height="80">
-  </a>
+<h2>Tecnologias utilizadas</h3>
+<ul>
+  <li>ASP .NET Core 3.1</li>
+  <li>PostgreSQL </li>
+</ul>
 
-  <h3 align="center">Desorganizze</h3>
-</p>
+<h2>Libs utilizadas</h3>
+<ul>
+  <li>NHibernate</li>
+  <li>FluentNHibernate</li>
+  <li>FluentMigrator</li>
+  <li>Health Check</li>
+  <li>xUnit</li>
+  <li>AutoFixure</li>
+  <li>FluentMigrator</li>
+</ul>
+
+
+
+
+
+
