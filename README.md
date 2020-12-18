@@ -3,14 +3,12 @@
   <h2 align="center">Desorganizze</h2>
 </p>
 
-<br />
 <h3>Tecnologias utilizadas</h3>
 <ul>
   <li>ASP .NET Core 3.1</li>
   <li>PostgreSQL </li>
 </ul>
 
-<br />
 <h3>Libs utilizadas</h3>
 <ul>
   <li>NHibernate</li>
