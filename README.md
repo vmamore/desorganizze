@@ -1,6 +1,4 @@
-<p align="center">
-  <h2 align="center">Desorganizze</h2>
-</p>
+<h1 align="center">Desorganizze</h1>
 
 <h3>Tecnologias utilizadas</h3>
 <ul>
