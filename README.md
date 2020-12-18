@@ -1,4 +1,3 @@
-<br />
 <p align="center">
   <h2 align="center">Desorganizze</h2>
 </p>
