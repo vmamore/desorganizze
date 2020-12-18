@@ -8,8 +8,8 @@ namespace Desorganizze.Infra.Mappings
         public AccountMap()
         {
             Id(acc => acc.Id)
-                .GeneratedBy.Identity()
-                .Column("id");
+                .Column("id")
+                .GeneratedBy.Assigned();
             References(x => x.User, "user_id").Unique();
             HasMany(x => x.Transactions)
                 .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore)

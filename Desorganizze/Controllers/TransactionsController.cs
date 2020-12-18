@@ -3,6 +3,8 @@ using Desorganizze.Models;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;
 using NHibernate.Linq;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Desorganizze.Controllers
@@ -34,6 +36,20 @@ namespace Desorganizze.Controllers
             await transaction.CommitAsync();
 
             return Created($"transactions/{transactionCreated.Id}", transactionDto);
+        }
+
+        [HttpGet]
+        [Route("{accountId}")]
+        public async Task<IActionResult> GetAllTransactionsFromAccount(Guid accountId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var transactionsFromAccount = await _session.Query<Transaction>()
+                .Where(t => t.Account.Id == accountId)
+                .Select(x => new TransactionQueryDto (x.TotalAmount.Amount, x.Type, x.CreatedDate))
+                .ToListAsync();
+
+            return Ok(transactionsFromAccount);
         }
     }
 }

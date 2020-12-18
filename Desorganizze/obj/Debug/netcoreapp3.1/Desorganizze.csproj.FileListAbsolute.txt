@@ -153,9 +153,6 @@ D:\Labs\desorganizze_project\desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\r
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csprojAssemblyReference.cache
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.AssemblyInfoInputs.cache
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.AssemblyInfo.cs
-D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csproj.CoreCompileInputs.cache
-D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cs
-D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cache
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.RazorTargetAssemblyInfo.cache
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csproj.CopyComplete
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\staticwebassets\Desorganizze.StaticWebAssets.Manifest.cache
@@ -164,3 +161,7 @@ D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\D
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.xml
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.pdb
 D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.genruntimeconfig.cache
+D:\Labs\desorganizze_project\desorganizze\Desorganizze\bin\Debug\netcoreapp3.1\System.Text.Json.dll
+D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.csproj.CoreCompileInputs.cache
+D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cs
+D:\Labs\desorganizze_project\desorganizze\Desorganizze\obj\Debug\netcoreapp3.1\Desorganizze.MvcApplicationPartsAssemblyInfo.cache

@@ -53,7 +53,16 @@ namespace Desorganizze.Controllers
 
             var token = TokenService.GenerateToken(userPersisted);
 
-            return Ok(new { username = loginDto.Username, token });
+            var account = await _session
+                .Query<Account>()
+                .FirstOrDefaultAsync(acc => acc.User.Id == userPersisted.Id);
+
+            return Ok(new { 
+                username = loginDto.Username, 
+                name = userPersisted.Name.ToString(), 
+                cpf = userPersisted.CPF.ToString(), 
+                accountId = account.Id, 
+                token });
         }
     }
 }

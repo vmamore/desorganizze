@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sdIlFmbEd7Ya9Lj81S+qr0YwNmIYxf1Bx8X0ie+aRWfJBNZhyjEpbmA7MlSGXYYXvmy/OJwNKNh+dWZek4K9cA==",
+  "dgSpecHash": "IYuFML9gG3LfF4pHa67fbBLcMFIeHwOwyhJyGtGyYr3I9ODoFeCVPNPIW4n+3+Ea1rq2ANFDHyA1b3p0uCX4Eg==",
   "success": true,
   "projectFilePath": "D:\\Labs\\desorganizze_project\\desorganizze\\Desorganizze\\Desorganizze.csproj",
   "expectedPackageFiles": [
@@ -163,6 +163,7 @@
     "C:\\Users\\PC\\.nuget\\packages\\system.text.encoding.codepages\\4.4.0\\system.text.encoding.codepages.4.4.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

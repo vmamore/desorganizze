@@ -11,6 +11,6 @@ namespace Desorganizze.Dtos
         [Required]
         public byte Type { get; set; }
         [Required]
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desorganizze.Models.ValueObjects;
+using System;
 
 namespace Desorganizze.Models
 {
@@ -15,7 +16,7 @@ namespace Desorganizze.Models
         public virtual DateTime CreatedDate { get; }
         public virtual Money TotalAmount { get; }
         public virtual Account Account { get; protected set; }
-        public virtual bool IsAdding => Type == TransactionType.Add;
+        private bool IsAdding => Type == TransactionType.Add;
 
         protected Transaction() {}
 
@@ -27,5 +28,7 @@ namespace Desorganizze.Models
             TotalAmount = Money.Create(totalAmount);
             Account = account;
         }
+
+        public virtual decimal GetAmountByType() => this.IsAdding ? this.TotalAmount.Amount : -this.TotalAmount.Amount;
     }
 }

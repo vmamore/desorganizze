@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using FluentMigrator.SqlServer;
 using System;
 
 namespace Desorganizze.Infra.Migrations
@@ -9,8 +10,11 @@ namespace Desorganizze.Infra.Migrations
         public override void Up()
         {
             Create.Table("accounts")
-                .WithColumn("id").AsInt64().PrimaryKey().Identity()
+                .WithColumn("id").AsGuid().PrimaryKey()
                 .WithColumn("user_id").AsInt64().ForeignKey("FK_accounts_users_id", "users", "id").NotNullable();
+
+            Insert.IntoTable("accounts")
+                .Row(new { id = Guid.NewGuid(), user_id = 1 });
         }
 
         public override void Down()

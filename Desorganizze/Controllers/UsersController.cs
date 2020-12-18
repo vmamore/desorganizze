@@ -58,7 +58,12 @@ namespace Desorganizze.Controllers
             if (userPersisted != null)
                 return BadRequest($"{userDto.Username} já está sendo utilizado.");
 
-            var user = new User(userDto.Username, userDto.Password);
+            var user = new User(
+                userDto.FirstName,
+                userDto.LastName,
+                userDto.CPF,
+                userDto.Username, 
+                userDto.Password);
 
             await _session.SaveAsync(user);
 

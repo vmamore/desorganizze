@@ -12,7 +12,7 @@ namespace Desorganizze.Infra.Migrations
                 .WithColumn("type").AsByte().NotNullable()
                 .WithColumn("created_date").AsDateTime().NotNullable()
                 .WithColumn("money_amount").AsInt64().NotNullable()
-                .WithColumn("account_id").AsInt64().NotNullable();
+                .WithColumn("account_id").AsGuid().NotNullable();
 
             Create.ForeignKey("FK_transactions_accounts_id")
                 .FromTable("transactions").ForeignColumn("account_id")
