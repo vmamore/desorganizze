@@ -1,12 +1,10 @@
 <br />
 <p align="center">
   <h2 align="center">Desorganizze</h2>
-  <hr />
 </p>
 
 <br />
 <h3>Tecnologias utilizadas</h3>
-<hr />
 <ul>
   <li>ASP .NET Core 3.1</li>
   <li>PostgreSQL </li>
