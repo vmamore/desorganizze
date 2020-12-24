@@ -10,7 +10,11 @@ namespace Desorganizze.Infra.Mappings
             Id(acc => acc.Id)
                 .Column("id")
                 .GeneratedBy.Assigned();
-            References(x => x.User, "user_id").Unique();
+            References(x => x.Wallet, "wallet_id").Unique();
+            Component(x => x.Name, m =>
+            {
+                m.Map(x => x.Valor, "name");
+            });
             HasMany(x => x.Transactions)
                 .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore)
                 .KeyColumn("account_id")

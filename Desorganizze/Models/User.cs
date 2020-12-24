@@ -5,11 +5,11 @@ namespace Desorganizze.Models
     public class User
     {
         public virtual int Id { get; protected set; }
-        public virtual string Username { get; protected set; }
-        public virtual string Password { get; protected set; }
+        public virtual Username Username { get; protected set; }
+        public virtual Password Password { get; protected set; }
         public virtual Name Name { get; set; }
         public virtual CPF CPF { get; set; }
-        public virtual Account Account { get; protected set; }
+        public virtual Wallet Wallet { get; protected set; }
 
         protected User() {}
 
@@ -17,9 +17,9 @@ namespace Desorganizze.Models
         {
             Name = Name.Create(firstName, lastName);
             CPF = CPF.Create(cpf);
-            Username = username;
-            Password = password;
-            Account = new Account(this);
+            Username = Username.Create(username);
+            Password = Password.Create(password);
+            Wallet = new Wallet(this);
         }
     }
 }

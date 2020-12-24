@@ -9,7 +9,8 @@ namespace Desorganizze.Models
     public class Account
     {
         public virtual Guid Id { get; protected set; }
-        public virtual User User { get; protected set; }
+        public virtual AccountName Name { get; set; }
+        public virtual Wallet Wallet { get; protected set; }
         private readonly IList<Transaction> _transactions;
         public virtual IReadOnlyCollection<Transaction> Transactions => new ReadOnlyCollection<Transaction>(_transactions);
 
@@ -26,11 +27,12 @@ namespace Desorganizze.Models
 
         protected Account() { }
 
-        public Account(User user)
+        public Account(Wallet wallet, string name)
         {
             this.Id = Guid.NewGuid();
+            this.Name = AccountName.Create(name);
             _transactions = new List<Transaction>();
-            User = user;
+            Wallet = wallet;
         }
 
         public virtual Transaction NewTransaction(decimal amount, TransactionType type)

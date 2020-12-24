@@ -11,6 +11,9 @@ namespace Desorganizze.Models.ValueObjects
             if (string.IsNullOrEmpty(valor))
                 throw new ArgumentNullException(nameof(valor));
 
+            if (!EhValido(valor))
+                throw new ArgumentException(nameof(valor));
+
             this.Valor = valor;
         }
 
@@ -18,6 +21,8 @@ namespace Desorganizze.Models.ValueObjects
         {
             return new CPF(cpf);
         }
+
+        private bool EhValido(string valor) => true;
 
         public override string ToString() => Valor;
     }

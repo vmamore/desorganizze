@@ -45,23 +45,23 @@ namespace Desorganizze.Controllers
 
             var userPersisted = await _session
                 .Query<User>()
-                .FirstOrDefaultAsync(u => u.Username == loginDto.Username &&
-                                          u.Password == loginDto.Password);
+                .FirstOrDefaultAsync(u => u.Username.Valor == loginDto.Username &&
+                                          u.Password.Valor == loginDto.Password);
 
             if (userPersisted == null)
                 return NotFound($"{loginDto.Username} não existe.");
 
             var token = TokenService.GenerateToken(userPersisted);
 
-            var account = await _session
-                .Query<Account>()
-                .FirstOrDefaultAsync(acc => acc.User.Id == userPersisted.Id);
+            var wallet = await _session
+                .Query<Wallet>()
+                .FirstOrDefaultAsync(w => w.User.Id == userPersisted.Id);
 
             return Ok(new { 
                 username = loginDto.Username, 
                 name = userPersisted.Name.ToString(), 
                 cpf = userPersisted.CPF.ToString(), 
-                accountId = account.Id, 
+                walletId = wallet.Id, 
                 token });
         }
     }

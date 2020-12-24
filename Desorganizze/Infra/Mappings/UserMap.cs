@@ -8,8 +8,15 @@ namespace Desorganizze.Infra.Mappings
         public UserMap()
         {
             Id(x => x.Id).GeneratedBy.Identity().Column("id");
-            Map(x => x.Username).Column("username");
-            Map(x => x.Password).Column("password");
+
+            Component(x => x.Password, m =>
+            {
+                m.Map(x => x.Valor, "password");
+            });
+            Component(x => x.Username, m =>
+            {
+                m.Map(x => x.Valor, "username");
+            });
             Component(x => x.CPF, m =>
             {
                 m.Map(x => x.Valor, "cpf");
@@ -19,7 +26,7 @@ namespace Desorganizze.Infra.Mappings
                 m.Map(x => x.FirstName, "first_name");
                 m.Map(x => x.LastName, "last_name");
             });
-            HasOne(x => x.Account).PropertyRef(x => x.User).Cascade.All();
+            HasOne(x => x.Wallet).PropertyRef(x => x.User).Cascade.All();
             Table("users");
         }
     }
