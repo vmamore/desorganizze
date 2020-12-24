@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Desorganizze.Models
 {
@@ -33,6 +34,23 @@ namespace Desorganizze.Models
         public virtual Money GetBalance()
         {
             return Money.Zero();
+        }
+
+        public virtual void TransferBetweenAccounts(Guid recipientAccountId, Guid sourceAccountId, decimal totalValue)
+        {
+            var recipientAccount = _accounts.SingleOrDefault(acc => acc.Id == recipientAccountId);
+
+            if (recipientAccount is null)
+                throw new ArgumentNullException($"Recipient account not found: {recipientAccount}");
+
+            var sourceAccount = _accounts.SingleOrDefault(acc => acc.Id == sourceAccountId);
+
+            if (sourceAccount is null)
+                throw new ArgumentNullException($"Source account not found: {sourceAccount}");
+
+            sourceAccount.CreateDebitTransaction(totalValue);
+
+            recipientAccount.CreateCreditTransaction(totalValue);
         }
     }
 }

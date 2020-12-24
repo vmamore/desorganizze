@@ -20,7 +20,7 @@ namespace Desorganizze.Models
 
         protected Transaction() {}
 
-        public Transaction(decimal totalAmount, TransactionType type, Account account)
+        private Transaction(decimal totalAmount, TransactionType type, Account account)
         {
             Id = Guid.NewGuid();
             Type = type;
@@ -28,6 +28,14 @@ namespace Desorganizze.Models
             TotalAmount = Money.Create(totalAmount);
             Account = account;
         }
+
+        public static Transaction CreateTransactionFromType(decimal totalAmount, Account account, TransactionType type)
+            => type switch
+            {
+                TransactionType.Add => new Transaction(totalAmount, TransactionType.Add, account),
+                TransactionType.Subtract => new Transaction(totalAmount, TransactionType.Subtract, account),
+                _ => throw new InvalidOperationException("Transaction type not defined")
+            };
 
         public virtual decimal GetAmountByType() => this.IsAdding ? this.TotalAmount.Amount : -this.TotalAmount.Amount;
     }

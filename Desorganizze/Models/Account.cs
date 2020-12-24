@@ -37,16 +37,26 @@ namespace Desorganizze.Models
 
         public virtual Transaction NewTransaction(decimal amount, TransactionType type)
         {
-            var transaction = new Transaction(amount, type, this);
+            var transaction = Transaction.CreateTransactionFromType(amount, this, type);
 
-            var totalBalance = GetBalance.Amount + transaction.GetAmountByType();
+            var totalBalanceWithNewTransaction = GetBalance.Amount + transaction.GetAmountByType();
 
-            if (totalBalance < 0)
+            if (0 > totalBalanceWithNewTransaction)
                 throw new AccountCannotHaveNegativeBalance();
 
             _transactions.Add(transaction);
 
             return transaction;
+        }
+
+        public virtual void CreateDebitTransaction(decimal totalValue)
+        {
+            NewTransaction(totalValue, TransactionType.Subtract);
+        }
+
+        public virtual void CreateCreditTransaction(decimal totalValue)
+        {
+            NewTransaction(totalValue, TransactionType.Add);
         }
     }
 }

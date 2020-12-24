@@ -1,4 +1,6 @@
-﻿namespace Desorganizze.Models.ValueObjects
+﻿using System;
+
+namespace Desorganizze.Models.ValueObjects
 {
     public class Money
     {
@@ -26,5 +28,7 @@
             var money = obj as Money;
             return this.Amount == money.Amount;
         }
+
+        public bool IsZero() => this.Amount == 0;
     }
 }
