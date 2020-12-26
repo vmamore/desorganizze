@@ -6,18 +6,14 @@ using Xunit;
 namespace IntegrationTests.Desorganizze.Middleware
 {
     [Collection("Server collection")]
-    public class HealthCheckTests
+    public class HealthCheckTests : IntegrationTest
     {
-        private ServerFixture _server;
-        public HealthCheckTests(ServerFixture serverFixture)
-        {
-            _server = serverFixture;
-        }
+        public HealthCheckTests(ServerFixture serverFixture) : base(serverFixture) { }
 
         [Fact]
         public async Task Should_Return_200_And_Healthy()
         {
-            var response = await _server.Client.GetAsync("/health");
+            var response = await GetAsync("/health");
 
             var responseContent = await response.Content.ReadAsStringAsync();
 

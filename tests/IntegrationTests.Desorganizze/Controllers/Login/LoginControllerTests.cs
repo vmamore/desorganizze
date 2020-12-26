@@ -1,22 +1,15 @@
 ﻿using FluentAssertions;
 using IntegrationTests.Desorganizze.Utils;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests.Desorganizze.Controllers.Login
 {
     [Collection("Server collection")]
-    public class LoginControllerTests
+    public class LoginControllerTests : IntegrationTest
     {
-        private ServerFixture _server;
-        public LoginControllerTests(ServerFixture serverFixture)
-        {
-            _server = serverFixture;
-        }
+        public LoginControllerTests(ServerFixture serverFixture) : base(serverFixture) {}
 
         [Fact]
         public async Task Should_Return_OK_And_Token_When_Valid_User_Is_Trying_To_login()
@@ -26,9 +19,9 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 username = "vmamore",
                 password = "teste123"
             };
-            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await _server.Client.PostAsync("/api/login", bodyRequest);
-            var responseDeserialized = await JsonSerializer.DeserializeAsync<LoginPostResponseDto>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            var response = await PostAsync("/api/login", model);
+            var responseDeserialized = await DeserializeAsync<LoginPostResponseDto>(response);
 
             response.EnsureSuccessStatusCode();
 
@@ -47,9 +40,8 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 username = "vmamore",
                 password = "senhainvalida"
             };
-            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await _server.Client.PostAsync("/api/login", bodyRequest);
 
+            var response = await PostAsync("/api/login", model);
             var responseMessage = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -68,8 +60,8 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 username = username,
                 password = password
             };
-            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await _server.Client.PostAsync("/api/login", bodyRequest);
+
+            var response = await PostAsync("/api/login", model);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
