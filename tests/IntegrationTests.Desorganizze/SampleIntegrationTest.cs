@@ -1,11 +1,11 @@
 ﻿using Desorganizze;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using ThrowawayDb.Postgres;
 using Xunit;
@@ -15,26 +15,33 @@ namespace IntegrationTests.Desorganizze
     public class SampleIntegrationTest
     {
         [Fact]
-        public async Task Should_Return_Hello_World()
+        public async Task Should_Return_Healthy()
         {
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
             var hostBuilder = new HostBuilder()
                 .ConfigureWebHost(webHost =>
                 {
+                    webHost.UseConfiguration(config);
                     webHost.UseTestServer();
-                    webHost.Configure(app => app.Run(async ctx => await ctx.Response.WriteAsync("Hello World!")));
+                    webHost.UseStartup<Startup>();
                 });
 
             var host = await hostBuilder.StartAsync();
 
             var client = host.GetTestClient();
 
-            var response = await client.GetAsync("/");
+            var response = await client.GetAsync("/health");
 
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
 
-            Assert.Equal("Hello World!", responseString);
+            Assert.Equal("Healthy", responseString);
         }
 
         [Fact]
