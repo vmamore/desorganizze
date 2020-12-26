@@ -18,7 +18,7 @@ namespace IntegrationTests.Desorganizze.Utils
             CreateWebHost();
         }
 
-        public void CreateWebHost()
+        private void CreateWebHost()
         {
             Environment.SetEnvironmentVariable("DATABASE_NAME", Database.Name);
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "IntegrationTest");
