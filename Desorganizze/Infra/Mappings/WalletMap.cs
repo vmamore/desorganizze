@@ -16,6 +16,7 @@ namespace Desorganizze.Infra.Mappings
                 .KeyColumn("wallet_id")
                 .Inverse()
                 .Cascade.SaveUpdate();
+            Table("wallets");
         }
     }
 }

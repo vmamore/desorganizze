@@ -39,14 +39,14 @@ namespace Desorganizze.Controllers
         }
 
         [HttpGet]
-        [Route("{accountId}")]
-        public async Task<IActionResult> GetAllTransactionsFromAccount(Guid accountId)
+        [Route("{walletId}")]
+        public async Task<IActionResult> GetAllTransactionsFromUser(Guid walletId)
         {
             if (!ModelState.IsValid) return BadRequest();
 
             var transactionsFromAccount = await _session.Query<Transaction>()
-                .Where(t => t.Account.Id == accountId)
-                .Select(x => new TransactionQueryDto (x.TotalAmount.Amount, x.Type, x.CreatedDate))
+                .Where(t => t.Account.Wallet.Id == walletId)
+                .Select(x => new TransactionQueryDto (x.TotalAmount.Amount, x.Type, x.CreatedDate, x.Account.Name.Valor))
                 .ToListAsync();
 
             return Ok(transactionsFromAccount);
