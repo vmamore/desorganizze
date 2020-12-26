@@ -9,7 +9,7 @@ using System.Net.Http;
 
 namespace IntegrationTests.Desorganizze.Utils
 {
-    public class ServerFixture : DatabaseFixture
+    public class ServerFixture : DatabaseFixture, IDisposable
     {
         public HttpClient Client { get; private set; }
 
