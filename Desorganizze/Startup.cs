@@ -1,4 +1,5 @@
 using Desorganizze.Infra.Extensions;
+using Desorganizze.Infra.Utils;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,7 @@ namespace Desorganizze
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionStrings:PgSql"];
+            var connectionString = ConnectionStringBuilder.Create(Configuration);
 
             services.AddHealthChecks()
                 .AddNpgSql(connectionString);
