@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IntegrationTests.Desorganizze.Utils;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -16,6 +17,7 @@ namespace IntegrationTests.Desorganizze
         public string WalletId { get; set; }
         public string Token { get; set; }
     }
+
     public class LoginControllerTests : IClassFixture<ServerFixture>
     {
         private ServerFixture _server;
@@ -43,6 +45,23 @@ namespace IntegrationTests.Desorganizze
             responseDeserialized.Name.Should().NotBeNullOrEmpty();
             responseDeserialized.WalletId.Should().NotBeNullOrEmpty();
             responseDeserialized.Token.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public async Task Should_Return_NotFound_When_User_Is_Not_Valid()
+        {
+            var model = new
+            {
+                username = "vmamore",
+                password = "senhainvalida"
+            };
+            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await _server.Client.PostAsync("/api/login", bodyRequest);
+
+            var responseMessage = await response.Content.ReadAsStringAsync();
+
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            responseMessage.Should().Be($"{model.username} não existe.");
         }
     }
 }
