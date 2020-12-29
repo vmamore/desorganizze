@@ -9,7 +9,6 @@ using NHibernate.Linq;
 
 namespace Desorganizze.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class LoginController : ControllerBase

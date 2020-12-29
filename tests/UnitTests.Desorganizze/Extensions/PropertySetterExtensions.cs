@@ -2,7 +2,7 @@
 
 namespace UnitTests.Desorganizze.Extensions
 {
-    public static class PropertySetter
+    public static class PropertySetterExtensions
     {
         public static void Set(this object obj, string propertyName, object value)
         {
