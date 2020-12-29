@@ -60,7 +60,11 @@ namespace Desorganizze.Controllers
             await _session.SaveOrUpdateAsync(newAccount);
             await transaction.CommitAsync();
 
-            return Created(string.Empty, transaction);
+            return Created(string.Empty, new
+            {
+                id = newAccount.Id,
+                name = newAccount.Name.Valor
+            });
         }
 
         [HttpPut("accounts")]
