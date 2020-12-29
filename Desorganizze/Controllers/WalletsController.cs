@@ -1,5 +1,6 @@
 ﻿using Desorganizze.Dtos;
 using Desorganizze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;
 using NHibernate.Linq;
@@ -9,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace Desorganizze.Controllers
 {
-    [Route("api/[controller]/{walletId}")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]/{walletId}")]
     public class WalletsController : ControllerBase
     {
         private readonly ISession _session;
@@ -20,8 +22,8 @@ namespace Desorganizze.Controllers
         }
 
         [HttpPost("accounts/{accountId}")]
-        public async Task<IActionResult> Create(
-            [FromRoute] string accountId, 
+        public async Task<IActionResult> CreateTransaction(
+            [FromRoute] string accountId,
             [FromBody] TransactionDto transactionDto)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -40,8 +42,49 @@ namespace Desorganizze.Controllers
             return Created($"transactions/{transactionCreated.Id}", transactionDto);
         }
 
-        [HttpGet]
-        [Route("accounts")]
+        [HttpPost("accounts")]
+        public async Task<IActionResult> CreateAccount(
+            [FromRoute] string walletId,
+            [FromBody] CreateAccountDto createAccountDto)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var wallet = await _session.Query<Wallet>()
+                .FirstAsync(a => a.Id == Guid.Parse(walletId));
+
+            if (wallet == null) return NotFound($"Wallet not found.");
+
+            var newAccount = wallet.NewAccount(createAccountDto.Name);
+
+            using var transaction = _session.BeginTransaction();
+            await _session.SaveOrUpdateAsync(newAccount);
+            await transaction.CommitAsync();
+
+            return Created(string.Empty, transaction);
+        }
+
+        [HttpPut("accounts")]
+        public async Task<IActionResult> TransferBetweenAccounts(
+            [FromRoute] string walletId,
+            [FromBody] TransferBetweenAccountsDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var wallet = await _session.Query<Wallet>()
+                .FirstAsync(a => a.Id == Guid.Parse(walletId));
+
+            if (wallet == null) return NotFound($"Wallet not found.");
+
+            wallet.TransferBetweenAccounts(dto.RecipientAccountId, dto.SourceAccountId, dto.Amount);
+
+            using var transaction = _session.BeginTransaction();
+            await _session.SaveOrUpdateAsync(wallet);
+            await transaction.CommitAsync();
+
+            return Ok();
+        }
+
+        [HttpGet("accounts")]
         public async Task<IActionResult> GetAllAccountsFromUser(Guid walletId)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -54,7 +97,7 @@ namespace Desorganizze.Controllers
             return Ok(allAccountsFromUser);
         }
 
-        [HttpGet]
+        [HttpGet("transactions")]
         public async Task<IActionResult> GetAllTransactionsFromUser(Guid walletId)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -65,6 +108,25 @@ namespace Desorganizze.Controllers
                 .ToListAsync();
 
             return Ok(transactionsFromAccount);
+        }
+
+        [HttpGet("~/wallets/{userId}/user")]
+        public async Task<IActionResult> GetWalletFromUser(int userId)
+        {
+            if (userId == default) return BadRequest();
+
+            var wallet = await _session.Query<Wallet>()
+                .Where(wallet => wallet.User.Id == userId)
+                .Select(wallet => new GetWalletByUserId
+                {
+                    WalletId = wallet.Id,
+                    Accounts = wallet.Accounts.Select(account => new AccountDto { AccountId = account.Id, Namme = account.Name.Valor })
+                })
+                .FirstOrDefaultAsync();
+
+            if (wallet is null) return NotFound();
+
+            return Ok(wallet);
         }
     }
 }
