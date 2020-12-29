@@ -10,7 +10,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
     {
         private const string BASE_ENDPOINT = "/api/users";
 
-        public UserControllerTests(ServerFixture serverFixture) : base(serverFixture) {}
+        public UserControllerTests(ServerFixture serverFixture) : base(serverFixture) { }
 
         [Fact]
         public async Task Should_Return_OK_When_Valid_Input_For_Creating_User_Is_Sent()
@@ -33,6 +33,18 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
             contentDeserialized.FirstName.Should().Be(inputModel.firstname);
             contentDeserialized.LastName.Should().Be(inputModel.lastname);
             contentDeserialized.Password.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Should_Return_All_Users()
+        {
+            var token = await GetTokenAsync();
+
+            var response = await GetAsync(BASE_ENDPOINT, token);
+            var contentDeserialized = await DeserializeListAsync<GetAllUsersResponse>(response);
+
+            response.EnsureSuccessStatusCode();
+            contentDeserialized.Should().ContainSingle();
         }
     }
 }
