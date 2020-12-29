@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTests.Desorganizze.Controllers.Users
 {
-    public class GetAllUsersResponse
+    public class GetUsersResponse
     {
         public int Id { get; set; }
         public string Username { get; set; }
