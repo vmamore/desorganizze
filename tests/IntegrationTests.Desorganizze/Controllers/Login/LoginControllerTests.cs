@@ -9,6 +9,8 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
     [Collection("Server collection")]
     public class LoginControllerTests : IntegrationTest
     {
+        private const string BASE_ENDPOINT = "/api/login";
+
         public LoginControllerTests(ServerFixture serverFixture) : base(serverFixture) {}
 
         [Fact]
@@ -20,7 +22,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "teste123"
             };
 
-            var response = await PostAsync("/api/login", model);
+            var response = await PostAsync(BASE_ENDPOINT, model);
             var responseDeserialized = await DeserializeAsync<LoginPostResponseDto>(response);
 
             response.EnsureSuccessStatusCode();
@@ -41,7 +43,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "senhainvalida"
             };
 
-            var response = await PostAsync("/api/login", model);
+            var response = await PostAsync(BASE_ENDPOINT, model);
             var responseMessage = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -61,7 +63,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = password
             };
 
-            var response = await PostAsync("/api/login", model);
+            var response = await PostAsync(BASE_ENDPOINT, model);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
