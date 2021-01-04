@@ -33,6 +33,12 @@ namespace IntegrationTests.Desorganizze.Utils
             return await _server.Client.PostAsync(endpoint, bodyRequest);
         }
 
+        protected async Task<HttpResponseMessage> PutAsync(string endpoint, object model)
+        {
+            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            return await _server.Client.PutAsync(endpoint, bodyRequest);
+        }
+
         protected async Task<HttpResponseMessage> GetAsync(string endpoint)
         {
             return await _server.Client.GetAsync(endpoint);

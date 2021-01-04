@@ -10,7 +10,5 @@ namespace Desorganizze.Dtos
         public decimal Amount { get; set; }
         [Required]
         public byte Type { get; set; }
-        [Required]
-        public Guid AccountId { get; set; }
     }
 }

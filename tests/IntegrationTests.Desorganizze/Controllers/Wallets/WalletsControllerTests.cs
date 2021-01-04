@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Desorganizze.Models;
+using FluentAssertions;
 using IntegrationTests.Desorganizze.Utils;
 using System.Net;
 using System.Threading.Tasks;
@@ -42,6 +43,69 @@ namespace IntegrationTests.Desorganizze.Controllers.Wallets
             response.EnsureSuccessStatusCode();
             newAccountResponseDto.Name.Should().Be(inputModel.Name);
             newAccountResponseDto.Id.Should().NotBe(default);
+        }
+
+        [Fact]
+        public async Task Should_Create_Transaction_To_Valid_Accounts()
+        {
+            var adminId = 1;
+            var token = await GetTokenAsync();
+            var getResponse = await GetAsync($"wallets/{adminId}/user", token);
+            var wallet = await DeserializeAsync<GetWalletFromUserId>(getResponse);
+            var inputModel = new
+            {
+                Name = "Account Name Test"
+            };
+            var createdAccountResponse = await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModel);
+            createdAccountResponse.EnsureSuccessStatusCode();
+            var newAccountResponseDto = await DeserializeAsync<PostNewAccountDto>(createdAccountResponse);
+            var inputTransactionModel = new
+            {
+                Amount = 1000.0m,
+                Type = (int) TransactionType.Add
+            };
+
+            var createdTransactionResponse = await PostAsync($"api/wallets/{wallet.WalletId}/accounts/{newAccountResponseDto.Id}", inputTransactionModel);
+
+            var createdTransactionResponseString = await createdTransactionResponse.Content.ReadAsStringAsync();
+            createdTransactionResponse.EnsureSuccessStatusCode();
+        }
+
+        [Fact]
+        public async Task Should_Transfer_Money_Between_Valid_Accounts()
+        {
+            var adminId = 1;
+            var token = await GetTokenAsync();
+            var getResponse = await GetAsync($"wallets/{adminId}/user", token);
+            var wallet = await DeserializeAsync<GetWalletFromUserId>(getResponse);
+            var inputModelAccountOne = new
+            {
+                Name = "Account Name Test One"
+            };
+            var responseFromAccountOne = await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModelAccountOne);
+            var newAccountResponseOneDto = await DeserializeAsync<PostNewAccountDto>(responseFromAccountOne);
+            var inputModelAccountTwo = new
+            {
+                Name = "Account Name Test Two"
+            };
+            var responseFromAccountTwo = await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModelAccountTwo);
+            var newAccountResponseTwoDto = await DeserializeAsync<PostNewAccountDto>(responseFromAccountTwo);
+            var inputTransactionModel = new
+            {
+                Amount = 1000.0m,
+                Type = (int)TransactionType.Add
+            };
+            var transactionFromAccountOne = await PostAsync($"api/wallets/{wallet.WalletId}/accounts/{newAccountResponseOneDto.Id}", inputTransactionModel);
+            var inputModel = new
+            {
+                amount = 1000.0m,
+                sourceAccountId = newAccountResponseOneDto.Id,
+                recipientAccountId = newAccountResponseTwoDto.Id
+            };
+
+            var result = await PutAsync($"api/wallets/{wallet.WalletId}/accounts", inputModel);
+
+            result.EnsureSuccessStatusCode();
         }
     }
 }

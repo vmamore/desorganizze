@@ -23,23 +23,29 @@ namespace Desorganizze.Controllers
 
         [HttpPost("accounts/{accountId}")]
         public async Task<IActionResult> CreateTransaction(
-            [FromRoute] string accountId,
+            [FromRoute] Guid accountId,
             [FromBody] TransactionDto transactionDto)
         {
             if (!ModelState.IsValid) return BadRequest();
 
             var accountPersited = await _session.Query<Account>()
-                .FirstAsync(a => a.Id == transactionDto.AccountId);
+                .FirstAsync(a => a.Id == accountId);
 
             if (accountPersited == null) return NotFound($"Account not found.");
 
-            var transactionCreated = accountPersited.NewTransaction(transactionDto.Amount, (TransactionType)transactionDto.Type);
+            var createdTransaction = accountPersited.NewTransaction(transactionDto.Amount, (TransactionType)transactionDto.Type);
 
             using var transaction = _session.BeginTransaction();
-            await _session.SaveOrUpdateAsync(accountPersited);
+            await _session.SaveOrUpdateAsync(createdTransaction);
             await transaction.CommitAsync();
 
-            return Created($"transactions/{transactionCreated.Id}", transactionDto);
+            return Created($"transactions/{createdTransaction.Id}", new
+            {
+                accountId = accountPersited.Id,
+                accountName = accountPersited.Name.Valor,
+                transactionType = transactionDto.Type,
+                transactionAmount = createdTransaction.TotalAmount.Amount
+            });
         }
 
         [HttpPost("accounts")]
