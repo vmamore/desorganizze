@@ -29,13 +29,13 @@ namespace IntegrationTests.Desorganizze.Utils
 
         protected async Task<HttpResponseMessage> PostAsync(string endpoint, object model)
         {
-            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var bodyRequest = ParseBody(model);
             return await _server.Client.PostAsync(endpoint, bodyRequest);
         }
 
         protected async Task<HttpResponseMessage> PutAsync(string endpoint, object model)
         {
-            var bodyRequest = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var bodyRequest = ParseBody(model);
             return await _server.Client.PutAsync(endpoint, bodyRequest);
         }
 
@@ -43,6 +43,7 @@ namespace IntegrationTests.Desorganizze.Utils
         {
             return await _server.Client.GetAsync(endpoint);
         }
+
         protected async Task<HttpResponseMessage> GetAsync(string endpoint, string token)
         {
             _server.Client.DefaultRequestHeaders.Authorization =
@@ -63,5 +64,7 @@ namespace IntegrationTests.Desorganizze.Utils
             var loginResponseDto = await DeserializeAsync<LoginPostResponseDto>(response);
             return loginResponseDto.Token;
         }
+
+        private StringContent ParseBody(object model) => new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
     }
 }
