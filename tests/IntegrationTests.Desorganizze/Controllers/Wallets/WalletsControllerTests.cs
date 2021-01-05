@@ -107,5 +107,30 @@ namespace IntegrationTests.Desorganizze.Controllers.Wallets
 
             result.EnsureSuccessStatusCode();
         }
+
+        [Fact]
+        public async Task Should_Get_All_Accounts_From_User_Wallet()
+        {
+            var adminId = 1;
+            var token = await GetTokenAsync();
+            var getResponse = await GetAsync($"wallets/{adminId}/user", token);
+            var wallet = await DeserializeAsync<GetWalletFromUserId>(getResponse);
+            var inputModelAccountOne = new
+            {
+                Name = "Account Name Test One"
+            };
+            await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModelAccountOne);
+            var inputModelAccountTwo = new
+            {
+                Name = "Account Name Test Two"
+            };
+             await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModelAccountTwo);
+
+            var response = await GetAsync($"api/wallets/{wallet.WalletId}/accounts", token);
+            var responseContent = await DeserializeListAsync<GetAccountsFromWalletId>(response);
+
+            response.EnsureSuccessStatusCode();
+            responseContent.Should().HaveCount(3);
+        }
     }
 }
