@@ -12,7 +12,7 @@ namespace Desorganizze.Dtos
     {
         public decimal Amount { get; }
         public string Type { get; }
-        public string AccountName { get; set; }
+        public string AccountName { get; }
         public DateTime CreatedDate { get; }
 
         public TransactionQueryDto(decimal amount, TransactionType type, DateTime createdDate, string accountName)

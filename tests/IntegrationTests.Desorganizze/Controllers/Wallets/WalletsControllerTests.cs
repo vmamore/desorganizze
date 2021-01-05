@@ -132,5 +132,37 @@ namespace IntegrationTests.Desorganizze.Controllers.Wallets
             response.EnsureSuccessStatusCode();
             responseContent.Should().HaveCount(3);
         }
+
+        [Fact]
+        public async Task Should_Get_All_Transactions_From_Wallet()
+        {
+            var adminId = 1;
+            var token = await GetTokenAsync();
+            var getResponse = await GetAsync($"wallets/{adminId}/user", token);
+            var wallet = await DeserializeAsync<GetWalletFromUserId>(getResponse);
+            var inputModelAccount = new
+            {
+                Name = "Account Name Test One"
+            };
+            var responseFromAccount = await PostAsync($"api/wallets/{wallet.WalletId}/accounts", inputModelAccount);
+            var newAccountResponseDto = await DeserializeAsync<PostNewAccountDto>(responseFromAccount);
+
+            var inputTransactionModel = new
+            {
+                Amount = 1000.0m,
+                Type = (int)TransactionType.Add
+            };
+
+            await PostAsync($"api/wallets/{wallet.WalletId}/accounts/{newAccountResponseDto.Id}", inputTransactionModel);
+            await PostAsync($"api/wallets/{wallet.WalletId}/accounts/{newAccountResponseDto.Id}", inputTransactionModel);
+            await PostAsync($"api/wallets/{wallet.WalletId}/accounts/{newAccountResponseDto.Id}", inputTransactionModel);
+
+            var response = await GetAsync($"api/wallets/{wallet.WalletId}/transactions", token);
+            var responseContent = await DeserializeListAsync<GetTransactionsFromWallet>(response);
+
+            response.EnsureSuccessStatusCode();
+            responseContent.Should().HaveCount(7);
+            responseContent.Should().Contain(c => c.AccountName == inputModelAccount.Name);
+        }
     }
 }

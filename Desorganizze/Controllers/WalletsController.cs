@@ -107,7 +107,6 @@ namespace Desorganizze.Controllers
             return Ok(allAccountsFromUser);
         }
 
-        // TODO: Create Test
         [HttpGet("transactions")]
         public async Task<IActionResult> GetAllTransactionsFromUser(Guid walletId)
         {
