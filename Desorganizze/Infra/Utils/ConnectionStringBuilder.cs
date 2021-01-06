@@ -9,7 +9,8 @@ namespace Desorganizze.Infra.Utils
         {
             var connectionString = configuration["ConnectionStrings:PgSql"];
 
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") return connectionString;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ||
+                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production") return connectionString;
 
             return connectionString.Replace("{DATABASE_NAME}", Environment.GetEnvironmentVariable("DATABASE_NAME"));
         }
