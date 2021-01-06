@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  ASPNETCORE_ENVIRONMENT: Production
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
