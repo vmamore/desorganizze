@@ -12,6 +12,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      CAMINHO_PROJETO_TESTES_DE_UNIDADE: ./tests/UnitTests.Desorganizze/UnitTests.Desorganizze.csproj
+
     steps:
     - uses: actions/checkout@master
 
@@ -19,6 +22,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.102'
+
+    - name: Executar testes de unidade
+      run: dotnet test ${{ env.CAMINHO_PROJETO_TESTES_DE_UNIDADE }} --verbosity minimal
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
