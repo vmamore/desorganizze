@@ -30,7 +30,7 @@ namespace UnitTests.Desorganizze.Models
 
             var transactionCreated = account.NewTransaction(amount, type);
 
-            transactionCreated.TotalAmount.Amount.Should().Be(amount);
+            transactionCreated.TotalAmount.Amount.Should().Be(0);
             transactionCreated.Type.Should().Be(type);
         }
 
