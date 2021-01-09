@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - desorganizze-web-app
+name: Build and deploy ASP.Net Core app to Azure Web App - desorganizze
 
 on:
   push:
@@ -30,12 +30,12 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp /p:EnvironmentName=Production
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'desorganizze-web-app'
+        app-name: 'desorganizze'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9d1f61042bdb4a87a24b846e35340b58 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_eb99cb0f99a045d79c557596f721fe2e }}
         package: ${{env.DOTNET_ROOT}}/myapp 
