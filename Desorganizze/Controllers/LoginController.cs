@@ -32,7 +32,7 @@ namespace Desorganizze.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <param name="userDto"></param>
+        /// <param name="loginDto"></param>
         /// <returns>A token to access</returns>
         /// <response code="200">Returns a new token</response>
         /// <response code="404">The login/password aren't valid</response>  

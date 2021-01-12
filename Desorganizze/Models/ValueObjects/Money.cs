@@ -20,15 +20,30 @@ namespace Desorganizze.Models.ValueObjects
 
         public static Money operator +(Money m1, Money m2) => Money.Create(m1.Amount + m2.Amount);
         public static Money operator -(Money m1, Money m2) => Money.Create(m1.Amount - m2.Amount);
+        public bool IsZero() => this.Amount == 0;
 
         public override string ToString() => $"R$ {Amount}";
 
-        public override bool Equals(object obj)
+        public bool Equals(Money other)
         {
-            var money = obj as Money;
-            return this.Amount == money.Amount;
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Amount.Equals(other.Amount);
         }
 
-        public bool IsZero() => this.Amount == 0;
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Money)obj);
+        }
+        public override int GetHashCode() => Amount.GetHashCode();
+
+        public static bool operator ==(Money left, Money right) =>
+        Equals(left, right);
+
+        public static bool operator !=(Money left, Money right) =>
+        !Equals(left, right);
     }
 }
