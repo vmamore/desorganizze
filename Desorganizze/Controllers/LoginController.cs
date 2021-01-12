@@ -4,6 +4,7 @@ using Desorganizze.Infra;
 using Desorganizze.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NHibernate;
 using NHibernate.Linq;
 
@@ -14,9 +15,11 @@ namespace Desorganizze.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ISession _session;
-        public LoginController(ISession session)
+        private readonly ILogger<LoginController> _logger;
+        public LoginController(ISession session, ILogger<LoginController> logger)
         {
             _session = session;
+            _logger = logger;
         }
 
         /// <summary>
@@ -40,6 +43,8 @@ namespace Desorganizze.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginDto loginDto)
         {
+            _logger.LogInformation("LoginDto: {@loginDto}", loginDto);
+
             if (!ModelState.IsValid) return BadRequest();
 
             var userPersisted = await _session
@@ -56,12 +61,18 @@ namespace Desorganizze.Controllers
                 .Query<Wallet>()
                 .FirstOrDefaultAsync(w => w.User.Id == userPersisted.Id);
 
-            return Ok(new { 
-                username = loginDto.Username, 
-                name = userPersisted.Name.ToString(), 
-                cpf = userPersisted.CPF.ToString(), 
-                walletId = wallet.Id, 
-                token });
+            var response = new
+            {
+                username = loginDto.Username,
+                name = userPersisted.Name.ToString(),
+                cpf = userPersisted.CPF.ToString(),
+                walletId = wallet.Id,
+                token
+            };
+
+            _logger.LogInformation("Response: {@response}", response);
+
+            return Ok(response);
         }
     }
 }
