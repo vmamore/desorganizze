@@ -4,6 +4,7 @@
 <ul>
   <li>ASP .NET Core 3.1</li>
   <li>PostgreSQL </li>
+  <li>Docker </li>
 </ul>
 
 <h2>Libs utilizadas</h3>
