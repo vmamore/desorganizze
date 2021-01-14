@@ -1,3 +1,6 @@
+using Desorganizze.Application.Commands;
+using Desorganizze.Application.Queries;
+using Desorganizze.Infra.CQRS;
 using Desorganizze.Infra.Extensions;
 using Desorganizze.Infra.Utils;
 using FluentMigrator.Runner;
@@ -47,6 +50,11 @@ namespace Desorganizze
                     });
 
             services.AddSwagger();
+
+            services
+                .RegisterQueriesApplicationDependencies()
+                .RegisterCommandHandlersDependencies()
+                .RegisterInfrastructureCQRSDependencies();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
         {

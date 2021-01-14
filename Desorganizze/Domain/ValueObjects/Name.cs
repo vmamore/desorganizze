@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Desorganizze.Models
+namespace Desorganizze.Domain.ValueObjects
 {
     public class Name
     {

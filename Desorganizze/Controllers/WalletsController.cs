@@ -1,5 +1,5 @@
-﻿using Desorganizze.Dtos;
-using Desorganizze.Models;
+﻿using Desorganizze.Domain;
+using Desorganizze.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;

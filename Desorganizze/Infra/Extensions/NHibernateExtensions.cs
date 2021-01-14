@@ -21,7 +21,7 @@ namespace Desorganizze.Infra.Extensions
                 .BuildSessionFactory();
 
             services.AddSingleton(sessionFactory);
-            services.AddScoped(factory => sessionFactory.OpenSession());
+            services.AddTransient(factory => sessionFactory.OpenSession());
 
             return services;
         }

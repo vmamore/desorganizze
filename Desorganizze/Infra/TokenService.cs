@@ -1,4 +1,4 @@
-﻿using Desorganizze.Models;
+﻿using Desorganizze.Domain;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;

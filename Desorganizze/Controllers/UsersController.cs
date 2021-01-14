@@ -1,10 +1,12 @@
-﻿using Desorganizze.Dtos;
-using Desorganizze.Models;
+﻿using Desorganizze.Application.Commands.Users;
+using Desorganizze.Application.Queries.Users.Parameters;
+using Desorganizze.Application.Queries.Users.ReadModel;
+using Desorganizze.Dtos;
+using Desorganizze.Infra.CQRS.Commands;
+using Desorganizze.Infra.CQRS.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate;
-using NHibernate.Linq;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Desorganizze.Controllers
@@ -14,36 +16,34 @@ namespace Desorganizze.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly ISession _session;
-        public UsersController(ISession session)
+        private readonly IQueryProcessor _queryProcessor;
+        private readonly ICommandDispatcher _commandDispatcher;
+        public UsersController(IQueryProcessor queryProcessor, ICommandDispatcher commandDispatcher)
         {
-            _session = session;
+            _queryProcessor = queryProcessor;
+            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUsers()
         {
-            var usuarios = await _session
-                .Query<User>()
-                .Select(x => new UserDto { Id = x.Id, Username = x.Username.Valor })
-                .ToListAsync();
+            var getAllUsers = new GetAllUsers();
 
-            return Ok(usuarios);
+            var result = await _queryProcessor.ExecuteQueryAsync<GetAllUsers, IEnumerable<UserDtoItem>>(getAllUsers);
+
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var userPersisted = await _session.Query<User>()
-                .Where(x => x.Id == id)
-                .Select(x => new UserDto { Username = x.Username.Valor })
-                .FirstOrDefaultAsync();
+            var getUserById = new GetUserById(id);
 
-            if (userPersisted == null)
-                return NotFound();
+            var result = await _queryProcessor.ExecuteQueryAsync<GetUserById, UserDtoItem>(getUserById);
 
-            return Ok(userPersisted);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -52,24 +52,19 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var userPersisted = await _session.Query<User>()
-                .FirstOrDefaultAsync(u => u.Username.Valor == userDto.Username);
+            var result = await _commandDispatcher.ExecuteAsync(
+                new RegisterUser(
+                    userDto.FirstName,
+                    userDto.LastName,
+                    userDto.CPF,
+                    userDto.Username,
+                    userDto.Password));
 
-            if (userPersisted != null)
-                return BadRequest($"{userDto.Username} já está sendo utilizado.");
-
-            var user = new User(
-                userDto.FirstName,
-                userDto.LastName,
-                userDto.CPF,
-                userDto.Username, 
-                userDto.Password);
-
-            await _session.SaveAsync(user);
+            if (result.Failure) return BadRequest(result.ErrorMessage);
 
             userDto.Password = null;
 
-            return Created($"account/{user.Id}", userDto);
+            return Created($"account/{0}", userDto);
         }
     }
 }

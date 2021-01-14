@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Desorganizze.Models.ValueObjects
+namespace Desorganizze.Domain.ValueObjects
 {
     public class CPF
     {

@@ -1,4 +1,4 @@
-﻿using Desorganizze.Models;
+﻿using Desorganizze.Domain;
 using FluentNHibernate.Mapping;
 
 namespace Desorganizze.Infra.Mappings

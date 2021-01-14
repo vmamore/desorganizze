@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Desorganizze.Models
+namespace Desorganizze.Domain
 {
     public class AccountCannotHaveNegativeBalance : Exception
     {

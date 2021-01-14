@@ -1,6 +1,6 @@
-﻿using Desorganizze.Models.ValueObjects;
+﻿using Desorganizze.Domain.ValueObjects;
 
-namespace Desorganizze.Models
+namespace Desorganizze.Domain
 {
     public class User
     {

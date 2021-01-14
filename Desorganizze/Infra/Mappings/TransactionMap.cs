@@ -1,6 +1,6 @@
-﻿using Desorganizze.Models;
-using FluentNHibernate.Mapping;
-    
+﻿using FluentNHibernate.Mapping;
+using Desorganizze.Domain;
+
 namespace Desorganizze.Infra.Mappings
 {
     public class TransactionMap : ClassMap<Transaction>

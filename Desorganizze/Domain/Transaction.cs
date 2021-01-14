@@ -1,7 +1,7 @@
-﻿using Desorganizze.Models.ValueObjects;
+﻿using Desorganizze.Domain.ValueObjects;
 using System;
 
-namespace Desorganizze.Models
+namespace Desorganizze.Domain
 {
     public enum TransactionType
     {

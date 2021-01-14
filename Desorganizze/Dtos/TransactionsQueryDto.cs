@@ -1,4 +1,4 @@
-﻿using Desorganizze.Models;
+﻿using Desorganizze.Domain;
 using System;
 
 namespace Desorganizze.Dtos

@@ -1,10 +1,10 @@
-﻿using Desorganizze.Models.ValueObjects;
+﻿using Desorganizze.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Desorganizze.Models
+namespace Desorganizze.Domain
 {
     public class Account
     {

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Core\" />
+    <Folder Include="Domain\Core\" />
   </ItemGroup>
 
 

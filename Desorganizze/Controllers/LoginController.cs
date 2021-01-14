@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Desorganizze.Domain;
 using Desorganizze.Dtos;
 using Desorganizze.Infra;
-using Desorganizze.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
