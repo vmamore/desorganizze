@@ -5,6 +5,7 @@
   <li>ASP .NET Core 3.1</li>
   <li>PostgreSQL </li>
   <li>Docker </li>
+  <li>Seq </li>
 </ul>
 
 <h2>Libs utilizadas</h3>
@@ -16,6 +17,7 @@
   <li>xUnit</li>
   <li>Auto Fixure</li>
   <li>Fluent Assertions</li>
+  <li>Serilog</li>
 </ul>
 
 
