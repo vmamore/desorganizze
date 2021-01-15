@@ -1,16 +1,15 @@
-﻿using Desorganizze.Application.Queries.Users.ReadModel;
+﻿using Desorganizze.Application.Commands.Wallets;
+using Desorganizze.Application.Queries.Users.ReadModel;
 using Desorganizze.Application.Queries.Wallets.Parameters;
 using Desorganizze.Application.Queries.Wallets.ReadModel;
-using Desorganizze.Domain;
 using Desorganizze.Dtos;
+using Desorganizze.Infra.CQRS.Commands;
 using Desorganizze.Infra.CQRS.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;
-using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Desorganizze.Controllers
@@ -22,8 +21,11 @@ namespace Desorganizze.Controllers
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly ISession _session;
-        public WalletsController(ISession session, IQueryProcessor queryProcessor)
+        private readonly ICommandDispatcher _commandDispatcher;
+        public WalletsController(ISession session, IQueryProcessor queryProcessor,
+            ICommandDispatcher commandDispatcher)
         {
+            _commandDispatcher = commandDispatcher;
             _queryProcessor = queryProcessor;
             _session = session;
         }
@@ -35,24 +37,11 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var accountPersited = await _session.Query<Account>()
-                .FirstAsync(a => a.Id == accountId);
+            var resultado = await _commandDispatcher.ExecuteAsync(new CreateTransaction(accountId, transactionDto.Amount, transactionDto.Type));
 
-            if (accountPersited == null) return NotFound($"Account not found.");
+            if (resultado.Failure && resultado.ReturnDto == null) return NotFound($"Account not found.");
 
-            var createdTransaction = accountPersited.NewTransaction(transactionDto.Amount, (TransactionType)transactionDto.Type);
-
-            using var transaction = _session.BeginTransaction();
-            await _session.SaveOrUpdateAsync(createdTransaction);
-            await transaction.CommitAsync();
-
-            return Created($"transactions/{createdTransaction.Id}", new
-            {
-                accountId = accountPersited.Id,
-                accountName = accountPersited.Name.Valor,
-                transactionType = transactionDto.Type,
-                transactionAmount = createdTransaction.TotalAmount.Amount
-            });
+            return Ok();
         }
 
         [HttpPost("accounts")]
@@ -62,22 +51,9 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var wallet = await _session.Query<Wallet>()
-                .FirstAsync(a => a.Id == Guid.Parse(walletId));
+            var resultado = await _commandDispatcher.ExecuteAsync(new CreateAccount(walletId, createAccountDto.Name));
 
-            if (wallet == null) return NotFound($"Wallet not found.");
-
-            var newAccount = wallet.NewAccount(createAccountDto.Name);
-
-            using var transaction = _session.BeginTransaction();
-            await _session.SaveOrUpdateAsync(newAccount);
-            await transaction.CommitAsync();
-
-            return Created(string.Empty, new
-            {
-                id = newAccount.Id,
-                name = newAccount.Name.Valor
-            });
+            return Created(string.Empty, resultado.ReturnDto);
         }
 
         [HttpPut("accounts")]
@@ -87,18 +63,9 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var wallet = await _session.Query<Wallet>()
-                .FirstAsync(a => a.Id == Guid.Parse(walletId));
+            var resultado = await _commandDispatcher.ExecuteAsync(new TransferBetweenAccounts(walletId, dto.SourceAccountId, dto.RecipientAccountId, dto.Amount));
 
-            if (wallet == null) return NotFound($"Wallet not found.");
-
-            wallet.TransferBetweenAccounts(dto.RecipientAccountId, dto.SourceAccountId, dto.Amount);
-
-            using var transaction = _session.BeginTransaction();
-            await _session.SaveOrUpdateAsync(wallet);
-            await transaction.CommitAsync();
-
-            return Ok();
+            return Created(string.Empty, resultado.ReturnDto);
         }
 
         [HttpGet("accounts")]
