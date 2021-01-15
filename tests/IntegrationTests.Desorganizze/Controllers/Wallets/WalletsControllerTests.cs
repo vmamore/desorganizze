@@ -1,4 +1,4 @@
-﻿using Desorganizze.Models;
+﻿using Desorganizze.Domain;
 using FluentAssertions;
 using IntegrationTests.Desorganizze.Utils;
 using System.Net;

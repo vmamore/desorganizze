@@ -2,7 +2,7 @@
 using Xunit;
 using FluentAssertions;
 using AutoFixture;
-using Desorganizze.Models.ValueObjects;
+using Desorganizze.Domain.ValueObjects;
 
 namespace UnitTests.Desorganizze.ValueObjects
 {

@@ -1,10 +1,15 @@
-﻿using Desorganizze.Domain;
+﻿using Desorganizze.Application.Queries.Users.ReadModel;
+using Desorganizze.Application.Queries.Wallets.Parameters;
+using Desorganizze.Application.Queries.Wallets.ReadModel;
+using Desorganizze.Domain;
 using Desorganizze.Dtos;
+using Desorganizze.Infra.CQRS.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;
 using NHibernate.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +20,11 @@ namespace Desorganizze.Controllers
     [Route("api/[controller]/{walletId}")]
     public class WalletsController : ControllerBase
     {
+        private readonly IQueryProcessor _queryProcessor;
         private readonly ISession _session;
-        public WalletsController(ISession session)
+        public WalletsController(ISession session, IQueryProcessor queryProcessor)
         {
+            _queryProcessor = queryProcessor;
             _session = session;
         }
 
@@ -99,12 +106,9 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var allAccountsFromUser = await _session.Query<Account>()
-                .Where(acc => acc.Wallet.Id == walletId)
-                .Select(x => new AllAccountsFromWalletQueryDto(x.GetBalance.Amount, x.Name.Valor))
-                .ToListAsync();
+            var result = await _queryProcessor.ExecuteQueryAsync<GetAllAccountsFromUser, IEnumerable<UserDtoItem>>(new GetAllAccountsFromUser(walletId));
 
-            return Ok(allAccountsFromUser);
+            return Ok(result);
         }
 
         [HttpGet("transactions")]
@@ -112,12 +116,9 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var transactionsFromAccount = await _session.Query<Transaction>()
-                .Where(t => t.Account.Wallet.Id == walletId)
-                .Select(x => new TransactionQueryDto(x.TotalAmount.Amount, x.Type, x.CreatedDate, x.Account.Name.Valor))
-                .ToListAsync();
+            var result = await _queryProcessor.ExecuteQueryAsync<GetTransactionsFromUser, IEnumerable<TransactionQueryDto>>(new GetTransactionsFromUser(walletId));
 
-            return Ok(transactionsFromAccount);
+            return Ok(result);
         }
 
         [HttpGet("~/wallets/{userId}/user")]
@@ -125,18 +126,11 @@ namespace Desorganizze.Controllers
         {
             if (userId == default) return BadRequest();
 
-            var wallet = await _session.Query<Wallet>()
-                .Where(wallet => wallet.User.Id == userId)
-                .Select(wallet => new GetWalletByUserId
-                {
-                    WalletId = wallet.Id,
-                    Accounts = wallet.Accounts.Select(account => new AccountDto { AccountId = account.Id, Namme = account.Name.Valor })
-                })
-                .FirstOrDefaultAsync();
+            var result = await _queryProcessor.ExecuteQueryAsync<GetWalletWithAccountsFromUser, WalletWithAcountDto>(new GetWalletWithAccountsFromUser(userId));
 
-            if (wallet is null) return NotFound();
+            if (result is null) return NotFound();
 
-            return Ok(wallet);
+            return Ok(result);
         }
     }
 }

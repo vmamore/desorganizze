@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
-using Desorganizze.Models;
-using Desorganizze.Models.ValueObjects;
+using Desorganizze.Domain;
+using Desorganizze.Domain.ValueObjects;
 using FluentAssertions;
 using System;
 using Xunit;

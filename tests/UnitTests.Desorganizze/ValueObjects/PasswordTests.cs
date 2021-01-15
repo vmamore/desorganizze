@@ -2,8 +2,8 @@
 using System;
 using Xunit;
 using FluentAssertions;
-using Desorganizze.Models.ValueObjects;
-using Desorganizze.Models;
+using Desorganizze.Domain.ValueObjects;
+using Desorganizze.Domain;
 
 namespace UnitTests.Desorganizze.ValueObjects
 {

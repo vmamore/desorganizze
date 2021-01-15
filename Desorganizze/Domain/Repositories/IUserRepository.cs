@@ -6,7 +6,7 @@ namespace Desorganizze.Domain.Repositories
     {
         Task<User> GetUserByIdAsync(int userId);
         Task<User> GetUserByNameAsync(string name);
-
+        Task<User> GetUserByUsernameAndPasswordAsync(string username, string password);
         Task SaveAsync(User user);
     }
 }

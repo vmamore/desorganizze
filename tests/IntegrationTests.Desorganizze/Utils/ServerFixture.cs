@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -34,7 +35,8 @@ namespace IntegrationTests.Desorganizze.Utils
                 {
                     webHost.UseConfiguration(config);
                     webHost.UseTestServer();
-                    webHost.UseStartup<Startup>();
+                    webHost.UseStartup<Startup>()
+                           .UseSerilog();
                 });
 
             var host = hostBuilder.Start();

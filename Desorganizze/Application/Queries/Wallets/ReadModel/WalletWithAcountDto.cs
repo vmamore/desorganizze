@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Desorganizze.Dtos
+namespace Desorganizze.Application.Queries.Wallets.ReadModel
 {
-    public class GetWalletByUserId
+    public class WalletWithAcountDto
     {
         public Guid WalletId { get; set; }
         public IEnumerable<AccountDto> Accounts { get; set; }

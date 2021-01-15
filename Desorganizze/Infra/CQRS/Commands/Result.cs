@@ -2,21 +2,21 @@
 {
     public class Result
     {
-        private static readonly Result OkResult = new Result(true, string.Empty);
-
         public string ErrorMessage { get; }
         public bool Success { get; }
         public bool Failure { get { return !Success; } }
+        public object ReturnDto { get; }
 
-        public Result(bool isSuccess, string errorMessage)
+        public Result(bool isSuccess, string errorMessage, object returnDto = null)
         {
             Success = isSuccess;
             ErrorMessage = errorMessage;
+            ReturnDto = returnDto;
         }
 
-        public static Result Ok()
+        public static Result Ok(object returnDto = null)
         {
-            return OkResult;
+            return new Result(true, string.Empty, returnDto);
         }
 
         public static Result Fail(string errorMessage)

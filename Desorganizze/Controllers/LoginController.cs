@@ -1,12 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Desorganizze.Domain;
+using Desorganizze.Application.Commands.Login;
 using Desorganizze.Dtos;
-using Desorganizze.Infra;
+using Desorganizze.Infra.CQRS.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NHibernate;
-using NHibernate.Linq;
 
 namespace Desorganizze.Controllers
 {
@@ -14,12 +12,13 @@ namespace Desorganizze.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly ISession _session;
         private readonly ILogger<LoginController> _logger;
-        public LoginController(ISession session, ILogger<LoginController> logger)
+        private readonly ICommandDispatcher _commandDispatcher;
+
+        public LoginController(ILogger<LoginController> logger, ICommandDispatcher commandDispatcher)
         {
-            _session = session;
             _logger = logger;
+            _commandDispatcher = commandDispatcher;
         }
 
         /// <summary>
@@ -47,32 +46,12 @@ namespace Desorganizze.Controllers
 
             if (!ModelState.IsValid) return BadRequest();
 
-            var userPersisted = await _session
-                .Query<User>()
-                .FirstOrDefaultAsync(u => u.Username.Valor == loginDto.Username &&
-                                          u.Password.Valor == loginDto.Password);
+            var resultado = await _commandDispatcher.ExecuteAsync(new AuthenticateCommand(
+                loginDto.Username, loginDto.Password));
 
-            if (userPersisted == null)
-                return NotFound($"{loginDto.Username} não existe.");
+            _logger.LogInformation("Response: {@response}", resultado);
 
-            var token = TokenService.GenerateToken(userPersisted);
-
-            var wallet = await _session
-                .Query<Wallet>()
-                .FirstOrDefaultAsync(w => w.User.Id == userPersisted.Id);
-
-            var response = new
-            {
-                username = loginDto.Username,
-                name = userPersisted.Name.ToString(),
-                cpf = userPersisted.CPF.ToString(),
-                walletId = wallet.Id,
-                token
-            };
-
-            _logger.LogInformation("Response: {@response}", response);
-
-            return Ok(response);
+            return Ok(resultado.ReturnDto);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace Desorganizze.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> GetUsers()
         {
             var getAllUsers = new GetAllUsers();

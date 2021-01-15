@@ -1,11 +1,11 @@
-﻿namespace Desorganizze.Dtos
+﻿namespace Desorganizze.Application.Queries.Wallets.ReadModel
 {
-    public class AllAccountsFromWalletQueryDto
+    public class AccountFromWalletDto
     {
         public decimal TotalAmount { get; }
         public string Name { get; }
 
-        public AllAccountsFromWalletQueryDto(decimal totalAmount, string name)
+        public AccountFromWalletDto(decimal totalAmount, string name)
         {
             TotalAmount = totalAmount;
             Name = name;

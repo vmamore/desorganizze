@@ -2,8 +2,8 @@
 using Xunit;
 using Bogus.Extensions.Brazil;
 using Bogus;
-using Desorganizze.Models;
 using FluentAssertions;
+using Desorganizze.Domain;
 
 namespace UnitTests.Desorganizze.Models
 {

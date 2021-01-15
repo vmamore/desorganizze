@@ -1,4 +1,6 @@
-﻿using Desorganizze.Application.Commands.Users;
+﻿using Desorganizze.Application.Commands.Login;
+using Desorganizze.Application.Commands.Login.Handler;
+using Desorganizze.Application.Commands.Users;
 using Desorganizze.Application.Commands.Users.Handlers;
 using Desorganizze.Domain.Repositories;
 using Desorganizze.Infra.CQRS.Commands;
@@ -13,7 +15,9 @@ namespace Desorganizze.Application.Commands
             this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IWalletRepository, WalletRepository>();
             services.AddTransient<ICommandHandler<RegisterUser>, RegisterUserHandler>();
+            services.AddTransient<ICommandHandler<AuthenticateCommand>, AuthenticateCommandHandler>();
             return services;
         }
     }

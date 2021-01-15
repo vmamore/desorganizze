@@ -1,12 +1,8 @@
 ﻿using Desorganizze.Domain;
 using System;
 
-namespace Desorganizze.Dtos
+namespace Desorganizze.Application.Queries.Wallets.ReadModel
 {
-    public class TransactionsQueryDto
-    {
-        public decimal TotalAmount { get; }
-    }
 
     public class TransactionQueryDto
     {

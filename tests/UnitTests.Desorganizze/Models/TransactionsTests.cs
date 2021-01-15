@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using Desorganizze.Models;
+using Desorganizze.Domain;
 using FluentAssertions;
 using Xunit;
 

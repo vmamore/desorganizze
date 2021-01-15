@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
-using Desorganizze.Models;
 using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;
 using UnitTests.Desorganizze.Extensions;
 using System;
+using Desorganizze.Domain;
 
 namespace UnitTests.Desorganizze.Models
 {

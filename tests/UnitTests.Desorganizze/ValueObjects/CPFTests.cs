@@ -1,9 +1,9 @@
 ﻿using Bogus;
-using Desorganizze.Models.ValueObjects;
 using System;
 using Xunit;
 using Bogus.Extensions.Brazil;
 using FluentAssertions;
+using Desorganizze.Domain.ValueObjects;
 
 namespace UnitTests.Desorganizze.ValueObjects
 {
