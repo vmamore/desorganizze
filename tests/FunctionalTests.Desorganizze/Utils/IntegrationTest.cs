@@ -27,14 +27,18 @@ namespace IntegrationTests.Desorganizze.Utils
             return await JsonSerializer.DeserializeAsync<IEnumerable<T>>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        protected async Task<HttpResponseMessage> PostAsync(string endpoint, object model)
+        protected async Task<HttpResponseMessage> PostAsync(string endpoint, object model, string token = null)
         {
+            if (!string.IsNullOrEmpty(token))
+                _server.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var bodyRequest = ParseBody(model);
             return await _server.Client.PostAsync(endpoint, bodyRequest);
         }
 
-        protected async Task<HttpResponseMessage> PutAsync(string endpoint, object model)
+        protected async Task<HttpResponseMessage> PutAsync(string endpoint, object model, string token = null)
         {
+            if (!string.IsNullOrEmpty(token))
+                _server.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var bodyRequest = ParseBody(model);
             return await _server.Client.PutAsync(endpoint, bodyRequest);
         }
@@ -46,8 +50,7 @@ namespace IntegrationTests.Desorganizze.Utils
 
         protected async Task<HttpResponseMessage> GetAsync(string endpoint, string token)
         {
-            _server.Client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", token);
+            _server.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return await _server.Client.GetAsync(endpoint);
         }
 

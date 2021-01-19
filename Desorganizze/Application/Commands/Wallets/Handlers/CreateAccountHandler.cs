@@ -29,7 +29,11 @@ namespace Desorganizze.Application.Commands.Wallets.Handlers
             await _session.SaveOrUpdateAsync(newAccount);
             await transaction.CommitAsync();
 
-            return Result.Ok();
+            return Result.Ok(new
+            {
+               Id = newAccount.Id,
+               Name = newAccount.Name.Valor
+            });
         }
     }
 }

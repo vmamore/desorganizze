@@ -42,6 +42,8 @@ namespace Desorganizze.Controllers
 
             var result = await _queryProcessor.ExecuteQueryAsync<GetUserById, UserDtoItem>(getUserById);
 
+            if (result == null) return NotFound();
+
             return Ok(result);
         }
 

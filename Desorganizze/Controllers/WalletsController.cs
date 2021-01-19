@@ -73,7 +73,7 @@ namespace Desorganizze.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var result = await _queryProcessor.ExecuteQueryAsync<GetAllAccountsFromUser, IEnumerable<UserDtoItem>>(new GetAllAccountsFromUser(walletId));
+            var result = await _queryProcessor.ExecuteQueryAsync<GetAllAccountsFromUser, IEnumerable<AccountFromWalletDto>>(new GetAllAccountsFromUser(walletId));
 
             return Ok(result);
         }

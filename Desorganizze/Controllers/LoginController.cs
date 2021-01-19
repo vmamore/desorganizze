@@ -49,6 +49,8 @@ namespace Desorganizze.Controllers
             var resultado = await _commandDispatcher.ExecuteAsync(new AuthenticateCommand(
                 loginDto.Username, loginDto.Password));
 
+            if (resultado.Failure) return NotFound(resultado.ErrorMessage);
+
             _logger.LogInformation("Response: {@response}", resultado);
 
             return Ok(resultado.ReturnDto);
