@@ -21,7 +21,7 @@ namespace Desorganizze.Application.Queries.Wallets.Processors
         public async Task<IEnumerable<AccountFromWalletDto>> ExecuteQueryAsync(GetAllAccountsFromUser queryParameter) =>
             await _session.Query<Account>()
                 .Where(acc => acc.Wallet.Id == queryParameter.WalletId)
-                .Select(x => new AccountFromWalletDto(x.GetBalance.Amount, x.Name.Valor))
+                .Select(x => new AccountFromWalletDto(x.Id, x.GetBalance.Amount, x.Name.Valor))
                 .ToListAsync();
 
         public async Task<IEnumerable<TransactionQueryDto>> ExecuteQueryAsync(GetTransactionsFromUser queryParameter) =>

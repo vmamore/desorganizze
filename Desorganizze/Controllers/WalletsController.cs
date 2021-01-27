@@ -30,7 +30,7 @@ namespace Desorganizze.Controllers
             _session = session;
         }
 
-        [HttpPost("accounts/{accountId}")]
+        [HttpPost("accounts/{accountId}/transaction")]
         public async Task<IActionResult> CreateTransaction(
             [FromRoute] Guid accountId,
             [FromBody] TransactionDto transactionDto)
