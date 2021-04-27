@@ -2,7 +2,7 @@
 {
     public class GetAccountsFromWalletId
     {
-        public decimal TotalAmount { get; }
-        public string Name { get; }
+        public decimal TotalAmount { get; set; }
+        public string Name { get; set; }
     }
 }

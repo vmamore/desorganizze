@@ -11,6 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Desorganizze", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests.Desorganizze", "tests\FunctionalTests.Desorganizze\FunctionalTests.Desorganizze.csproj", "{CA6BBE3D-D06E-42A3-BA57-F8E256A5590E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution-items", ".solution-items", "{48FF4B96-F272-4234-98DE-10E99CE8F56D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\main_desorganizze.yml = .github\workflows\main_desorganizze.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

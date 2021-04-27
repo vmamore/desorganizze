@@ -15,5 +15,13 @@ namespace Desorganizze.Infra.Repositories
         public async Task<Wallet> GetWalletById(Guid walletId) => await _session.Query<Wallet>().FirstOrDefaultAsync(w => w.Id == walletId);
 
         public async Task<Wallet> GetWalletByUserId(int userId) => await _session.Query<Wallet>().FirstOrDefaultAsync(w => w.User.Id == userId);
+
+        public async Task SaveOrUpdateAsync(Wallet wallet)
+        {
+            var transaction = _session.BeginTransaction();
+            await _session.SaveOrUpdateAsync(wallet);
+            await transaction.CommitAsync();
+            
+        }
     }
 }
