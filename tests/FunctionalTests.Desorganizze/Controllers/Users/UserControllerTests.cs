@@ -15,9 +15,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         [Fact]
         public async Task Should_Return_All_Users()
         {
-            var token = await GetTokenAsync();
-
-            var response = await GetAsync(BASE_ENDPOINT, token);
+            var response = await GetUsersAsync();
             var contentDeserialized = await DeserializeListAsync<GetUsersResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -36,7 +34,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastname = "Barbosa"
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, inputModel);
+            var response = await CreateUserAsync(inputModel);
             var contentDeserialized = await DeserializeAsync<PostUserResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -50,10 +48,8 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         [Fact]
         public async Task Should_Return_User_By_Id()
         {
-            var token = await GetTokenAsync();
             var id = 1;
-
-            var response = await GetAsync($"{BASE_ENDPOINT}/{id}", token);
+            var response = await GetUserByIdAsync(id);
             var contentDeserialized = await DeserializeAsync<GetUsersResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -63,10 +59,9 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         [Fact]
         public async Task Should_Return_Not_Found_When_User_Doesnt_Exist()
         {
-            var token = await GetTokenAsync();
             var id = -1;
 
-            var response = await GetAsync($"{BASE_ENDPOINT}/{id}", token);
+            var response = await GetUserByIdAsync(id);
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -83,7 +78,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastname = "Barbosa"
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, inputModel);
+            var response = await CreateUserAsync(inputModel);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
@@ -106,7 +101,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastName
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, inputModel);
+            var response = await CreateUserAsync(inputModel);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }

@@ -17,6 +17,42 @@ namespace IntegrationTests.Desorganizze.Utils
             _server = serverFixture;
         }
 
+        #region LoginController
+        public async Task<HttpResponseMessage> LoginAsync(object body)
+            => await PostAsync("/api/login", body);
+        #endregion
+
+        #region UserController
+        public async Task<HttpResponseMessage> GetUsersAsync()
+            => await GetAsync("/api/users", await GetTokenAsync());
+
+        public async Task<HttpResponseMessage> GetUserByIdAsync(int userId)
+            => await GetAsync($"/api/users/{userId}", await GetTokenAsync());
+
+        public async Task<HttpResponseMessage> CreateUserAsync(object body)
+            => await PostAsync("/api/users", body);
+        #endregion
+
+        #region WalletsController
+        public async Task<HttpResponseMessage> GetWalletByUserId(int userId)
+            => await GetAsync($"wallets/{userId}/user", await GetTokenAsync());
+
+        public async Task<HttpResponseMessage> GetAccountsFromWallet(Guid walletId)
+            => await GetAsync($"api/wallets/{walletId}/accounts", await GetTokenAsync());
+
+        public async Task<HttpResponseMessage> GetAllTransactionsFromWallet(Guid walletId)
+            => await GetAsync($"api/wallets/{walletId}/transactions");
+
+        public async Task<HttpResponseMessage> CreateNewAccount(Guid walletId, object body)
+            => await PostAsync($"api/wallets/{walletId}/accounts", body);
+
+        public async Task<HttpResponseMessage> CreateNewTransaction(Guid walletId, Guid accountId, object body)
+            => await PostAsync($"api/wallets/{walletId}/accounts/{accountId}/transaction", body);
+
+        public async Task<HttpResponseMessage> TransferBetweenAccounts(Guid walletId, object body)
+            => await PutAsync($"api/wallets/{walletId}/accounts", body);
+        #endregion
+
         protected async Task<T> DeserializeAsync<T>(HttpResponseMessage response)
         {
             return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });

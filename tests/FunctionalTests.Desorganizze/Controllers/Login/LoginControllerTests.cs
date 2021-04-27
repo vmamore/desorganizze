@@ -22,7 +22,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "teste123"
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, model);
+            var response = await LoginAsync(model);
             var responseDeserialized = await DeserializeAsync<LoginPostResponseDto>(response);
 
             response.EnsureSuccessStatusCode();
@@ -43,7 +43,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "senhainvalida"
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, model);
+            var response = await LoginAsync(model);
             var responseMessage = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -63,7 +63,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = password
             };
 
-            var response = await PostAsync(BASE_ENDPOINT, model);
+            var response = await LoginAsync(model);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
