@@ -1,7 +1,7 @@
 ﻿using System;
 using ThrowawayDb.Postgres;
 
-namespace IntegrationTests.Desorganizze.Utils
+namespace FunctionalTests.Desorganizze.Utils
 {
     public class DatabaseFixture : IDisposable
     {

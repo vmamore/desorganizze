@@ -1,21 +1,26 @@
 ﻿using FluentAssertions;
-using IntegrationTests.Desorganizze.Utils;
+using FunctionalTests.Desorganizze.Clients;
+using FunctionalTests.Desorganizze.Utils;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests.Desorganizze.Controllers.Users
+namespace FunctionalTests.Desorganizze.Controllers.Users
 {
     [Collection("Server collection")]
-    public class UserControllerTests : IntegrationTest
+    public class UserControllerTests : FunctionalTest
     {
-        private const string BASE_ENDPOINT = "/api/users";
+        private readonly UserClient _userClient;
 
-        public UserControllerTests(ServerFixture serverFixture) : base(serverFixture) { }
+        public UserControllerTests(ServerFixture serverFixture) : base(serverFixture)
+        {
+            _userClient = new UserClient(serverFixture.Client);
+        }
+
         [Fact]
         public async Task Should_Return_All_Users()
         {
-            var response = await GetUsersAsync();
+            var response = await _userClient.GetUsersAsync();
             var contentDeserialized = await DeserializeListAsync<GetUsersResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -34,7 +39,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastname = "Barbosa"
             };
 
-            var response = await CreateUserAsync(inputModel);
+            var response = await _userClient.CreateUserAsync(inputModel);
             var contentDeserialized = await DeserializeAsync<PostUserResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -49,7 +54,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         public async Task Should_Return_User_By_Id()
         {
             var id = 1;
-            var response = await GetUserByIdAsync(id);
+            var response = await _userClient.GetUserByIdAsync(id);
             var contentDeserialized = await DeserializeAsync<GetUsersResponse>(response);
 
             response.EnsureSuccessStatusCode();
@@ -61,7 +66,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         {
             var id = -1;
 
-            var response = await GetUserByIdAsync(id);
+            var response = await _userClient.GetUserByIdAsync(id);
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -78,7 +83,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastname = "Barbosa"
             };
 
-            var response = await CreateUserAsync(inputModel);
+            var response = await _userClient.CreateUserAsync(inputModel);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
@@ -89,7 +94,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
         [InlineData("vmamore", "pa$$word", "", "Maria", "Barbosa")]
         [InlineData("vmamore", "pa$$word", "45540096029", "", "Barbosa")]
         [InlineData("vmamore", "pa$$word", "45540096029", "Maria", "")]
-        public async Task Should_Return_BadRequest_When_Input_Model_Is_Invalid(string username, string password, 
+        public async Task Should_Return_BadRequest_When_Input_Model_Is_Invalid(string username, string password,
             string cpf, string firstName, string lastName)
         {
             var inputModel = new
@@ -101,7 +106,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Users
                 lastName
             };
 
-            var response = await CreateUserAsync(inputModel);
+            var response = await _userClient.CreateUserAsync(inputModel);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }

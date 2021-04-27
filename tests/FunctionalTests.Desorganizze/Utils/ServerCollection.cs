@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace IntegrationTests.Desorganizze.Utils
+namespace FunctionalTests.Desorganizze.Utils
 {
     [CollectionDefinition("Server collection")]
     public class ServerCollection : ICollectionFixture<ServerFixture>

@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests.Desorganizze.Controllers.Login
+﻿namespace FunctionalTests.Desorganizze.Controllers.Login
 {
     public class LoginPostResponseDto
     {

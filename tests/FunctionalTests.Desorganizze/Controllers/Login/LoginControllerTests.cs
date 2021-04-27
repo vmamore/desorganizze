@@ -1,17 +1,20 @@
 ﻿using FluentAssertions;
-using IntegrationTests.Desorganizze.Utils;
+using FunctionalTests.Desorganizze.Clients;
+using FunctionalTests.Desorganizze.Utils;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests.Desorganizze.Controllers.Login
+namespace FunctionalTests.Desorganizze.Controllers.Login
 {
     [Collection("Server collection")]
-    public class LoginControllerTests : IntegrationTest
+    public class LoginControllerTests : FunctionalTest
     {
-        private const string BASE_ENDPOINT = "/api/login";
-
-        public LoginControllerTests(ServerFixture serverFixture) : base(serverFixture) {}
+        private readonly LoginClient _loginClient;
+        public LoginControllerTests(ServerFixture serverFixture) : base(serverFixture)
+        {
+            _loginClient = new LoginClient(serverFixture.Client);
+        }
 
         [Fact]
         public async Task Should_Return_OK_And_Token_When_Valid_User_Is_Trying_To_login()
@@ -22,7 +25,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "teste123"
             };
 
-            var response = await LoginAsync(model);
+            var response = await _loginClient.LoginAsync(model);
             var responseDeserialized = await DeserializeAsync<LoginPostResponseDto>(response);
 
             response.EnsureSuccessStatusCode();
@@ -43,7 +46,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = "senhainvalida"
             };
 
-            var response = await LoginAsync(model);
+            var response = await _loginClient.LoginAsync(model);
             var responseMessage = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -63,7 +66,7 @@ namespace IntegrationTests.Desorganizze.Controllers.Login
                 password = password
             };
 
-            var response = await LoginAsync(model);
+            var response = await _loginClient.LoginAsync(model);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }

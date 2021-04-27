@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using IntegrationTests.Desorganizze.Utils;
+using FunctionalTests.Desorganizze.Utils;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests.Desorganizze.Middleware
+namespace FunctionalTests.Desorganizze.Middleware
 {
     [Collection("Server collection")]
-    public class HealthCheckTests : IntegrationTest
+    public class HealthCheckTests : FunctionalTest
     {
         public HealthCheckTests(ServerFixture serverFixture) : base(serverFixture) { }
 

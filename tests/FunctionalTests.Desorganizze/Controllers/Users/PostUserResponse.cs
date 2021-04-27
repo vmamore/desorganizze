@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests.Desorganizze.Controllers.Users
+﻿namespace FunctionalTests.Desorganizze.Controllers.Users
 {
     public class PostUserResponse
     {

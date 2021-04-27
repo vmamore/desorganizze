@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IntegrationTests.Desorganizze.Controllers.Wallets
+namespace FunctionalTests.Desorganizze.Controllers.Wallets
 {
     public class PostNewAccountDto
     {

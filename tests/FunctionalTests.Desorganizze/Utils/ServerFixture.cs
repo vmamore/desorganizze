@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 
-namespace IntegrationTests.Desorganizze.Utils
+namespace FunctionalTests.Desorganizze.Utils
 {
     public class ServerFixture : DatabaseFixture, IDisposable
     {
