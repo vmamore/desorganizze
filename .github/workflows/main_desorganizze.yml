@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CAMINHO_PROJETO_TESTES_DE_UNIDADE: ./tests/UnitTests.Desorganizze/UnitTests.Desorganizze.csproj
+      UNIT_TEST_PATH: ./tests/UnitTests.Desorganizze/UnitTests.Desorganizze.csproj
 
     steps:
     - uses: actions/checkout@master
@@ -23,19 +23,11 @@ jobs:
       with:
         dotnet-version: '3.1.102'
 
-    - name: Executar testes de unidade
-      run: dotnet test ${{ env.CAMINHO_PROJETO_TESTES_DE_UNIDADE }} --verbosity minimal
+    - name: Run unit tests
+      run: dotnet test ${{ env.UNIT_TEST_PATH }} --verbosity minimal
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'desorganizze'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_eb99cb0f99a045d79c557596f721fe2e }}
-        package: ${{env.DOTNET_ROOT}}/myapp 
