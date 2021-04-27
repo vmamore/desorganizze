@@ -4,11 +4,14 @@ using Desorganizze.Infra.CQRS;
 using Desorganizze.Infra.Extensions;
 using Desorganizze.Infra.Utils;
 using FluentMigrator.Runner;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Text.Json.Serialization;
 
@@ -20,6 +23,7 @@ namespace Desorganizze
 
         public Startup(IWebHostEnvironment env)
         {
+
             var configurationBuilder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -56,7 +60,7 @@ namespace Desorganizze
                 .RegisterCommandHandlersDependencies()
                 .RegisterInfrastructureCQRSDependencies();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner, ILogger<Startup> logger)
         {
             app.UseSwagger();
 
@@ -86,12 +90,14 @@ namespace Desorganizze
 
             app.UseAuthorization();
 
+            app.UseHealthChecks("/health");
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/health");
-
                 endpoints.MapControllers();
             });
+
+            migrationRunner.ListMigrations();
 
             migrationRunner.MigrateUp();
         }

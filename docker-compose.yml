@@ -3,10 +3,42 @@ services:
   desorganizze_web:
     build: .
     ports:
-      - "5000:5000"
+      - 5000:5000
+    depends_on: 
+      - desorganizze_db
+      - desorganizze_seq
+    networks: 
+      - desorganizze_network
+
   desorganizze_seq:
+    image: datalust/seq
     environment: 
       ACCEPT_EULA: Y
+    volumes: 
+      - /path/to/seq/data:/data
     ports:
-      - "5341:80"
-    image: datalust/seq
+      - 5341:5341
+      - 80:80
+    networks: 
+      - desorganizze_network
+    
+  desorganizze_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: desorganizze_db
+      POSTGRES_PASSWORD: 3xampl3
+    networks: 
+      - desorganizze_network
+
+  desorganizze_db_adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks: 
+      - desorganizze_network
+
+networks:
+  desorganizze_network:
+    driver: bridge

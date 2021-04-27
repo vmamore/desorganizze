@@ -42,8 +42,6 @@ namespace Desorganizze.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginDto loginDto)
         {
-            _logger.LogInformation("LoginDto: {@loginDto}", loginDto);
-
             if (!ModelState.IsValid) return BadRequest();
 
             var resultado = await _commandDispatcher.ExecuteAsync(new AuthenticateCommand(

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace Desorganizze.Infra.CQRS.Commands
@@ -18,7 +17,7 @@ namespace Desorganizze.Infra.CQRS.Commands
 
             var handler = this._dependencyResolver.Resolve<ICommandHandler<TCommand>>();
 
-            return await handler.ExecuteAsync(command);
+            return await new LoggingHandler<TCommand>(handler).ExecuteAsync(command);
         }
     }
 }
