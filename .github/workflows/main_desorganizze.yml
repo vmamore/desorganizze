@@ -28,7 +28,12 @@ jobs:
       run: dotnet test ${{ env.UNIT_TEST_PATH }} --verbosity minimal
 
     - name: Build the stack
-      run: docker-compose up
+      run: docker-compose up -d
+
+    - name: Wait for Containers
+      uses: jakejarvis/wait-action@master
+      with:
+          time: '15s'
 
     - name: Run functional fests
       run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} --verbosity minimal

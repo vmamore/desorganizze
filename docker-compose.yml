@@ -9,18 +9,6 @@ services:
       - desorganizze_seq
     networks: 
       - desorganizze_network
-
-  desorganizze_seq:
-    image: datalust/seq
-    environment: 
-      ACCEPT_EULA: Y
-    volumes: 
-      - /path/to/seq/data:/data
-    ports:
-      - 5341:5341
-      - 80:80
-    networks: 
-      - desorganizze_network
     
   desorganizze_db:
     image: postgres
@@ -31,13 +19,25 @@ services:
     networks: 
       - desorganizze_network
 
-  desorganizze_db_adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-    networks: 
-      - desorganizze_network
+  #desorganizze_seq:
+  #  image: datalust/seq
+  #  environment: 
+  #    ACCEPT_EULA: Y
+  #  volumes: 
+  #    - /path/to/seq/data:/data
+  #  ports:
+  #    - 5341:5341
+  #    - 80:80
+  #  networks: 
+  #    - desorganizze_network
+
+  #desorganizze_db_adminer:
+  #  image: adminer
+  #  restart: always
+  #  ports:
+  #    - 8080:8080
+  #  networks: 
+  #    - desorganizze_network
 
 networks:
   desorganizze_network:
