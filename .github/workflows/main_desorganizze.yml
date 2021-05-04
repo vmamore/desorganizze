@@ -24,16 +24,14 @@ jobs:
       with:
         dotnet-version: '3.1.102'
 
-    - name: Run unit tests
-      run: dotnet test ${{ env.UNIT_TEST_PATH }} --verbosity minimal
-
     - name: Build the stack
       run: docker-compose up -d
 
-    - name: Wait for Containers
-      uses: jakejarvis/wait-action@master
-      with:
-          time: '15s'
+    - name: Build
+      run: dotnet build -c Release --no-restore
+
+    - name: Run unit tests
+      run: dotnet test ${{ env.UNIT_TEST_PATH }} -c Release --verbosity minimal
 
     - name: Run functional fests
-      run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} --verbosity minimal
+      run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} -c Release --verbosity minimal
