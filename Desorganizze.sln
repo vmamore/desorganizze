@@ -13,6 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests.Desorganizz
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution-items", ".solution-items", "{48FF4B96-F272-4234-98DE-10E99CE8F56D}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 		.github\workflows\main_desorganizze.yml = .github\workflows\main_desorganizze.yml
 	EndProjectSection
 EndProject
