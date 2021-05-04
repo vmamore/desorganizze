@@ -17,7 +17,7 @@ jobs:
       FUNCTIONAL_TEST_PATH: ./tests/FunctionalTests.Desorganizze/FunctionalTests.Desorganizze.csproj
 
     steps:
-    - uses: actions/checkout@main'
+    - uses: actions/checkout@main
 
     - name: Build the stack
       run: docker-compose -f docker-compose.actions.yml up -d
