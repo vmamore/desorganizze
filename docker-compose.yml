@@ -6,7 +6,7 @@ services:
       - 5000:5000
     depends_on: 
       - desorganizze_db
-      - desorganizze_seq
+      #- desorganizze_seq
     networks: 
       - desorganizze_network
     
