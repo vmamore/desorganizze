@@ -34,7 +34,7 @@ namespace Desorganizze
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = ConnectionStringBuilder.Create(Configuration);
+            var connectionString = Configuration["ConnectionStrings:PgSql"];
 
             services.AddHealthChecks()
                 .AddNpgSql(connectionString);
@@ -96,8 +96,6 @@ namespace Desorganizze
             {
                 endpoints.MapControllers();
             });
-
-            migrationRunner.ListMigrations();
 
             migrationRunner.MigrateUp();
         }
