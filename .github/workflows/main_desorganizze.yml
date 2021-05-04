@@ -14,6 +14,7 @@ jobs:
 
     env:
       UNIT_TEST_PATH: ./tests/UnitTests.Desorganizze/UnitTests.Desorganizze.csproj
+      FUNCTIONAL_TEST_PATH: ./tests/FunctionalTests.Desorganizze/FunctionalTests.Desorganizze.csproj
 
     steps:
     - uses: actions/checkout@master
@@ -26,8 +27,8 @@ jobs:
     - name: Run unit tests
       run: dotnet test ${{ env.UNIT_TEST_PATH }} --verbosity minimal
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Build the stack
+      run: docker-compose up
 
-    - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+    - name: Run functional fests
+      run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} --verbosity minimal
