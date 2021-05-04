@@ -37,4 +37,4 @@ jobs:
       run: dotnet test ${{ env.UNIT_TEST_PATH }} -c Release --verbosity minimal
 
     - name: Run functional fests
-      run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} -c Release --verbosity minimal
+      run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} -c QA --verbosity minimal
