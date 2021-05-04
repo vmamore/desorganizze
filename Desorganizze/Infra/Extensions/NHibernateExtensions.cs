@@ -10,6 +10,8 @@ namespace Desorganizze.Infra.Extensions
     {
         public static IServiceCollection AddNHibernate(this IServiceCollection services, string connectionString)
         {
+            System.Console.WriteLine(connectionString);
+
             var sessionFactory = Fluently.Configure()
                 .Database(PostgreSQLConfiguration.Standard
                     .ConnectionString(connectionString)
