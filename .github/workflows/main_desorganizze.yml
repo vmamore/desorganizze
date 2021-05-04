@@ -26,6 +26,9 @@ jobs:
 
     - name: Build the stack
       run: docker-compose up -d
+    
+    - name: Restore NuGet packages
+      run: dotnet restore
 
     - name: Build
       run: dotnet build -c Release --no-restore
