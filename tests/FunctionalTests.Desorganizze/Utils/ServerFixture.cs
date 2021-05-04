@@ -22,7 +22,7 @@ namespace FunctionalTests.Desorganizze.Utils
         private void CreateWebHost()
         {
             //Environment.SetEnvironmentVariable("DATABASE_NAME", Database.Name);
-            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "IntegrationTest");
+            //Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "IntegrationTest");
 
             IConfiguration config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
