@@ -10,7 +10,7 @@ using System.Net.Http;
 
 namespace FunctionalTests.Desorganizze.Utils
 {
-    public class ServerFixture : DatabaseFixture, IDisposable
+    public class ServerFixture : IDisposable
     {
         public HttpClient Client { get; private set; }
 
@@ -21,7 +21,6 @@ namespace FunctionalTests.Desorganizze.Utils
 
         private void CreateWebHost()
         {
-            //Environment.SetEnvironmentVariable("DATABASE_NAME", Database.Name);
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "QA");
 
             IConfiguration config = new ConfigurationBuilder()
@@ -42,6 +41,11 @@ namespace FunctionalTests.Desorganizze.Utils
             var host = hostBuilder.Start();
 
             Client = host.GetTestClient();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
