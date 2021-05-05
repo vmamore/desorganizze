@@ -29,11 +29,11 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     
-    - name: Restore NuGet packages
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build -c Release --no-restore
+    - name: dotnet build and publish
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+        dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 
     - name: Run unit tests
       run: dotnet test ${{ env.UNIT_TEST_PATH }} -c Release --verbosity minimal
@@ -41,11 +41,9 @@ jobs:
     - name: Run functional fests
       run: dotnet test ${{ env.FUNCTIONAL_TEST_PATH }} -c QA --verbosity minimal
 
-    - name: dotnet publish
-      run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/desorganizze-app' 
-
-    - uses: azure/webapps-deploy@v2
+    - name: 'Run Azure webapp deploy action using publish profile credentials'
+      uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/desorganizze-app'
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
