@@ -15,15 +15,15 @@ variables:
 steps:
 - task: UseDotNet@2
   inputs:
-	versions: '3.1.x'
+    versions: '3.1.x'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-	feedsToUse: 'select'
+    feedsToUse: 'select'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-	arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
