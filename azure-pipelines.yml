@@ -21,19 +21,19 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '**/UnitTests.Desorganizze.csproj'
+    projects: '**/*.csproj'
     feedsToUse: 'select'
 
-#- task: DotNetCoreCLI@2
-#  inputs:
-#    command: 'build'
-#    projects: '**/*.sln'
-#    arguments: '--configuration $(buildConfiguration)'
-#  displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+  displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: '**/UnitTests.Desorganizze.csproj'
-    arguments: -c $(buildConfiguration) -v n
+    arguments: '--no-build -c $(buildConfiguration) -v n''
   displayName: 'Running Unit Tests'
