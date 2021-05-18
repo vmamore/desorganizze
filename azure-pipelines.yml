@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  TestProjects: '**/*[Tt]ests/*.csproj'
 
 steps:
 - task: UseDotNet@2
@@ -31,6 +32,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    project: '**/UnitTests.Desorganizze.dll'
+    projects: '**/*/UnitTests.*.csproj'
     arguments: '--no-build'
+    publishTestResults: true
   displayName: 'Running Unit Tests'
