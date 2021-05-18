@@ -30,7 +30,7 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command:
+    command: test
     project: './tests/UnitTests.Desorganizze/UnitTests.Desorganizze.csproj'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Running Unit Tests'
