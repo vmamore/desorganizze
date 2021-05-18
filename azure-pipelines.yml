@@ -35,5 +35,5 @@ steps:
   inputs:
     command: test
     projects: '**/UnitTests.Desorganizze.csproj'
-    arguments: -c $(buildConfiguration)
+    arguments: -c $(buildConfiguration) -v n
   displayName: 'Running Unit Tests'
