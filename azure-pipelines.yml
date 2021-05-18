@@ -33,8 +33,29 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Install .NET Core tools from local manifest'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'restore'
+
+- task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: '**/UnitTests.Desorganizze.csproj'
-    arguments: '--no-build -c $(buildConfiguration) -v n'
+    arguments: '--no-build -c $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
   displayName: 'Running Unit Tests'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Create code coverage report'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'run reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
