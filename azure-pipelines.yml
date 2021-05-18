@@ -31,6 +31,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    project: '**/UnitTests.Desorganizze.csproj'
+    project: '**/UnitTests.Desorganizze.dll'
     arguments: '--no-build'
   displayName: 'Running Unit Tests'
