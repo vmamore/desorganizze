@@ -23,6 +23,7 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
+  displayName: dotnet restore
 
 - task: DotNetCoreCLI@2
   inputs:
