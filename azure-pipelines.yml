@@ -21,7 +21,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '**/tests/UnitTests.Desorganizze.csproj'
+    projects: '**/UnitTests.Desorganizze.csproj'
     feedsToUse: 'select'
 
 #- task: DotNetCoreCLI@2
@@ -34,5 +34,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: '**/tests/UnitTests.Desorganizze.csproj'
+    projects: '**/UnitTests.Desorganizze.csproj'
+    arguments: -c $(buildConfiguration)
   displayName: 'Running Unit Tests'
