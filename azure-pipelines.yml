@@ -55,6 +55,14 @@ steps:
   displayName: 'Running Unit Tests'
 
 - task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/FunctionalTests.Desorganizze.csproj'
+    arguments: '--no-build -c $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+  displayName: 'Running Integration Tests'
+
+- task: DotNetCoreCLI@2
   displayName: 'Create code coverage report'
   inputs:
     command: custom
