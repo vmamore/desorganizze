@@ -13,6 +13,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DockerCompose@0
+  displayName: Start dependencies (docker-compose)
+  inputs:
+    containerregistrytype: Container Registry
+    dockerComposeFile: docker-compose.actions.yml
+    dockerComposeCommand: 'up -d'
+
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
