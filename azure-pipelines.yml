@@ -58,9 +58,8 @@ steps:
   inputs:
     command: test
     projects: '**/FunctionalTests.Desorganizze.csproj'
-    #arguments: '--no-build -c $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/f
-    publishTestResults: true
-  displayName: 'Running Integration Tests'
+    arguments: '--no-build -c $(buildConfiguration)'
+  displayName: 'Running Functional Tests'
 
 - task: DotNetCoreCLI@2
   displayName: 'Create code coverage report'
