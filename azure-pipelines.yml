@@ -91,6 +91,6 @@ steps:
 - task: AzureWebApp@1
   condition: succeeded()
   inputs:
-    azureSubscription: 'e06566a2-9f37-476b-a746-7b0afd69482c'
+    azureSubscription: 'desorganizze-service-connection'
     appName: 'desorganizze'
     package: $(Build.ArtifactStagingDirectory)/DesorganizzeWebApp.zip 
