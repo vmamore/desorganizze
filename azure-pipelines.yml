@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  azureSubscription:
 
 steps:
 - task: DockerCompose@0
@@ -80,8 +81,16 @@ steps:
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
+  displayName: 'dotnet publish'
 
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'DesorganizzeWebApp'
+
+- task: AzureWebApp@1
+  condition: succeeded()
+  inputs:
+    azureSubscription: 'e06566a2-9f37-476b-a746-7b0afd69482c'
+    appName: 'desorganizze'
+    package: $(Build.ArtifactStagingDirectory)/DesorganizzeWebApp.zip 
