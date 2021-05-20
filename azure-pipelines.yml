@@ -50,7 +50,7 @@ steps:
   inputs:
     command: test
     projects: '**/UnitTests.Desorganizze.csproj'
-    arguments: '--no-build -c $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    arguments: '--no-build -c $(buildConfiguration) -v normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
   displayName: 'Running Unit Tests'
 
@@ -58,7 +58,7 @@ steps:
   inputs:
     command: test
     projects: '**/FunctionalTests.Desorganizze.csproj'
-    arguments: '--no-build -c $(buildConfiguration)'
+    arguments: '--no-build -c $(buildConfiguration) -v normal'
   displayName: 'Running Functional Tests'
 
 - task: DotNetCoreCLI@2
