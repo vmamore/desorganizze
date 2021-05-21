@@ -1,19 +1,18 @@
-﻿using Desorganizze.Application.Commands.Wallets;
-using Desorganizze.Application.Queries.Users.ReadModel;
-using Desorganizze.Application.Queries.Wallets.Parameters;
-using Desorganizze.Application.Queries.Wallets.ReadModel;
-using Desorganizze.Dtos;
-using Desorganizze.Infra.CQRS.Commands;
-using Desorganizze.Infra.CQRS.Queries;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Desorganizze.Controllers
+﻿namespace Desorganizze.Controllers
 {
+    using Desorganizze.Application.Commands.Wallets;
+    using Desorganizze.Application.Queries.Wallets.Parameters;
+    using Desorganizze.Application.Queries.Wallets.ReadModel;
+    using Desorganizze.Dtos;
+    using Desorganizze.Infra.CQRS.Commands;
+    using Desorganizze.Infra.CQRS.Queries;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using NHibernate;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     [Authorize]
     [ApiController]
     [Route("api/[controller]/{walletId}")]
@@ -98,6 +97,14 @@ namespace Desorganizze.Controllers
             if (result is null) return NotFound();
 
             return Ok(result);
+        }
+
+        [HttpPost("transference")]
+        public IActionResult RegisterNewTransference([FromBody] NewTransferDto transferDto)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            return Ok();
         }
     }
 }
