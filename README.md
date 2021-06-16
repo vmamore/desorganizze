@@ -1,6 +1,7 @@
 [![Build Status](https://dev.azure.com/vmamorex/desorganizze/_apis/build/status/vmamore.desorganizze?branchName=main)](https://dev.azure.com/vmamorex/desorganizze/_build/latest?definitionId=2&branchName=main)
 
 <h1 align="center">Desorganizze</h1>
+Yes, another wallet app. 😅🥵
 
 <h2>Tecnologias utilizadas</h3>
 <ul>
