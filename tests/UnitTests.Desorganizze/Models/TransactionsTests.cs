@@ -16,7 +16,7 @@ namespace UnitTests.Desorganizze.Models
             var transactionType = _fixture.Create<TransactionType>();
             var account = _fixture.Create<Account>();
 
-            var transaction = Transaction.CreateTransactionFromType(totalAmount, account, transactionType);
+            var transaction = Transaction.CreateTransactionFromType(totalAmount, account, null, transactionType);
 
             transaction.Account.Should().Be(account);
             transaction.Type.Should().Be(transactionType);

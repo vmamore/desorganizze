@@ -31,11 +31,11 @@ namespace Desorganizze.Domain
             Category = category;
         }
 
-        public static Transaction CreateTransactionFromType(decimal totalAmount, Account account, TransactionType type)
+        public static Transaction CreateTransactionFromType(decimal totalAmount, Account account, Category category, TransactionType type)
             => type switch
             {
-                TransactionType.Add => new Transaction(totalAmount, TransactionType.Add, account, Category.Default(account.Wallet)),
-                TransactionType.Subtract => new Transaction(totalAmount, TransactionType.Subtract, account, Category.Default(account.Wallet)),
+                TransactionType.Add => new Transaction(totalAmount, TransactionType.Add, account, category),
+                TransactionType.Subtract => new Transaction(totalAmount, TransactionType.Subtract, account, category),
                 _ => throw new InvalidOperationException("Transaction type not defined")
             };
 

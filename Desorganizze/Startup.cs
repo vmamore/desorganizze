@@ -1,22 +1,19 @@
-using Desorganizze.Application.Commands;
-using Desorganizze.Application.Queries;
-using Desorganizze.Infra.CQRS;
-using Desorganizze.Infra.Extensions;
-using Desorganizze.Infra.Utils;
-using FluentMigrator.Runner;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using System.Text.Json.Serialization;
-
 namespace Desorganizze
 {
+    using Desorganizze.Application.Commands;
+    using Desorganizze.Application.Queries;
+    using Desorganizze.Infra.CQRS;
+    using Desorganizze.Infra.Extensions;
+    using FluentMigrator.Runner;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Serilog;
+    using System.Text.Json.Serialization;
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -34,16 +31,22 @@ namespace Desorganizze
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionStrings:PgSql"];
+            var dbConnectionString = Configuration["ConnectionStrings:PgSql"];
+            var redisConnectionString = Configuration["ConnectionStrings:Redis"];
 
             services.AddHealthChecks()
-                .AddNpgSql(connectionString);
+                .AddNpgSql(dbConnectionString);
 
             services.AddJwt();
 
-            services.AddMigrationRunner(connectionString);
+            services.AddMigrationRunner(dbConnectionString);
 
-            services.AddNHibernate(connectionString);
+            services.AddNHibernate(dbConnectionString);
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redisConnectionString;
+            });
 
             services.AddControllers()
                     .AddJsonOptions(options =>

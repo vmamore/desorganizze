@@ -21,5 +21,8 @@ namespace Desorganizze.Dtos
         /// <example>1 - Subtract</example>
         [Required]
         public byte Type { get; set; }
+
+        [Required]
+        public string CategoryId { get; set; }
     }
 }

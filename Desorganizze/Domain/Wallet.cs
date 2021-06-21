@@ -50,9 +50,9 @@ namespace Desorganizze.Domain
             if (sourceAccount is null)
                 throw new ArgumentNullException($"Source account not found: {sourceAccount}");
 
-            sourceAccount.CreateDebitTransaction(totalValue);
+            sourceAccount.CreateDebitTransaction(totalValue, Category.Default);
 
-            recipientAccount.CreateCreditTransaction(totalValue);
+            recipientAccount.CreateCreditTransaction(totalValue, Category.Default);
         }
         public virtual void CreateNewCategory(string description)
         {

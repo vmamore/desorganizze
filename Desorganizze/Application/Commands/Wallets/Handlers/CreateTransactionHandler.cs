@@ -21,7 +21,10 @@ namespace Desorganizze.Application.Commands.Wallets.Handlers
 
             if (accountPersited == null) return Result.Fail($"Account not found.");
 
-            var createdTransaction = accountPersited.NewTransaction(command.Amount, command.Type);
+            var category = await _session.Query<Category>()
+                .FirstAsync(c => c.Id == command.CategoryId);
+
+            var createdTransaction = accountPersited.NewTransaction(command.Amount, command.Type, category);
 
             using var transaction = _session.BeginTransaction();
             await _session.SaveOrUpdateAsync(createdTransaction);

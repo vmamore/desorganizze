@@ -36,7 +36,7 @@
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var resultado = await _commandDispatcher.ExecuteAsync(new CreateTransaction(accountId, transactionDto.Amount, transactionDto.Type));
+            var resultado = await _commandDispatcher.ExecuteAsync(new CreateTransaction(accountId, Guid.Parse(transactionDto.CategoryId), transactionDto.Amount, transactionDto.Type));
 
             if (resultado.Failure && resultado.ReturnDto == null) return NotFound($"Account not found.");
 

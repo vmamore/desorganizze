@@ -17,6 +17,12 @@
             Wallet = wallet;
         }
 
-        public static Category Default(Wallet wallet) => new Category("General", wallet);
+        public static Guid DefaultId() => Guid.Parse("8418db28-d240-11eb-b8bc-0242ac130003");
+
+        public static Category Default => new Category
+        {
+            Id = Guid.Parse("8418db28-d240-11eb-b8bc-0242ac130003")
+        };
+        
     }
 }

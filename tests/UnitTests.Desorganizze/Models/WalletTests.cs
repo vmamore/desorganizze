@@ -75,7 +75,7 @@ namespace UnitTests.Desorganizze.Models
         {
             var valueToTransfer = 1_000m;
             var sourceAccount = _fixture.Create<Account>();
-            var transactionInSourceAccount = Transaction.CreateTransactionFromType(10_000m, sourceAccount, TransactionType.Add);
+            var transactionInSourceAccount = Transaction.CreateTransactionFromType(10_000m, sourceAccount, null, TransactionType.Add);
             var recipientAccount = _fixture.Create<Account>();
             var wallet = _fixture.Create<Wallet>();
             wallet.Set("_accounts", new List<Account>

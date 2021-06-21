@@ -36,9 +36,9 @@ namespace Desorganizze.Domain
             Wallet = wallet;
         }
 
-        public virtual Transaction NewTransaction(decimal amount, TransactionType type)
+        public virtual Transaction NewTransaction(decimal amount, TransactionType type, Category category)
         {
-            var transaction = Transaction.CreateTransactionFromType(amount, this, type);
+            var transaction = Transaction.CreateTransactionFromType(amount, this, category, type);
 
             var totalBalanceWithNewTransaction = GetBalance.Amount + transaction.GetAmountByType();
 
@@ -50,14 +50,14 @@ namespace Desorganizze.Domain
             return transaction;
         }
 
-        public virtual void CreateDebitTransaction(decimal totalValue)
+        public virtual void CreateDebitTransaction(decimal totalValue, Category category)
         {
-            NewTransaction(totalValue, TransactionType.Subtract);
+            NewTransaction(totalValue, TransactionType.Subtract, category);
         }
 
-        public virtual void CreateCreditTransaction(decimal totalValue)
+        public virtual void CreateCreditTransaction(decimal totalValue, Category category)
         {
-            NewTransaction(totalValue, TransactionType.Add);
+            NewTransaction(totalValue, TransactionType.Add, category);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace UnitTests.Desorganizze.Models
             var accountName = _fixture.Create<string>();
             var account = new Account(wallet, accountName);
 
-            var transactionCreated = account.NewTransaction(amount, type);
+            var transactionCreated = account.NewTransaction(amount, type, null);
 
             transactionCreated.TotalAmount.Amount.Should().Be(amount);
             transactionCreated.Type.Should().Be(type);
@@ -41,8 +41,8 @@ namespace UnitTests.Desorganizze.Models
             var accountName = _fixture.Create<string>();
             var account = new Account(wallet, accountName);
 
-            var firstTransaction = account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Add);
-            var secondTransaction = account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Add);
+            var firstTransaction = account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Add, null);
+            var secondTransaction = account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Add, null);
             var totalAmountFromTransactions = firstTransaction.TotalAmount + secondTransaction.TotalAmount;
 
             account.GetBalance.Should().Be(totalAmountFromTransactions);
@@ -55,7 +55,7 @@ namespace UnitTests.Desorganizze.Models
             var accountName = _fixture.Create<string>();
             var account = new Account(wallet, accountName);
 
-            Action action = () => account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Subtract);
+            Action action = () => account.NewTransaction(_fixture.Create<decimal>(), TransactionType.Subtract, null);
 
             action.Should().Throw<AccountCannotHaveNegativeBalance>();
         }

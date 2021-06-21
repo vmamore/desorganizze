@@ -8,7 +8,7 @@ namespace Desorganizze.Infra.Migrations
         public override void Up()
         {
             Create.Table("categories")
-                .WithColumn("id").AsInt64().PrimaryKey().Identity()
+                .WithColumn("id").AsGuid().PrimaryKey()
                 .WithColumn("description").AsString(32).NotNullable()
                 .WithColumn("wallet_id").AsGuid().NotNullable();
 
@@ -17,7 +17,7 @@ namespace Desorganizze.Infra.Migrations
                 .ToTable("wallets").PrimaryColumn("id");
 
             Alter.Table("transactions")
-                .AddColumn("category_id").AsInt64().NotNullable();
+                .AddColumn("category_id").AsGuid().NotNullable();
 
             Create.ForeignKey("FK_transactions_categories_id")
                 .FromTable("transactions").ForeignColumn("category_id")
