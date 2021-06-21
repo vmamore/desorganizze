@@ -17,10 +17,6 @@ namespace Desorganizze.Infra.Migrations
                 .Row(new { id = Guid.NewGuid(), user_id = 1 });
         }
 
-        public override void Down()
-        {
-            Delete.Table("accounts");
-        }
-        
+        public override void Down() => Delete.Table("accounts");
     }
 }

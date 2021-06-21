@@ -19,9 +19,6 @@ namespace Desorganizze.Infra.Migrations
                 .ToTable("accounts").PrimaryColumn("id");
         }
 
-        public override void Down()
-        {
-            Delete.Table("transactions");
-        }
+        public override void Down() => Delete.Table("transactions");
     }
 }

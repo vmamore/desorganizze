@@ -13,13 +13,15 @@ namespace Desorganizze.Domain
 
         private readonly IList<Account> _accounts;
         public virtual IReadOnlyCollection<Account> Accounts => new ReadOnlyCollection<Account>(_accounts);
-
+        private readonly IList<Category> _categories;
+        public virtual IReadOnlyCollection<Category> Categories => new ReadOnlyCollection<Category>(_categories);
         protected Wallet() {}
 
         public Wallet(User user)
         {
             User = user;
             _accounts = new List<Account>();
+            _categories = new List<Category>();
         }
 
         public virtual Account NewAccount(string accountName)
@@ -51,6 +53,13 @@ namespace Desorganizze.Domain
             sourceAccount.CreateDebitTransaction(totalValue);
 
             recipientAccount.CreateCreditTransaction(totalValue);
+        }
+        public virtual void CreateNewCategory(string description)
+        {
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentNullException(nameof(description), "Category descrption cannot be null or empty.");
+
+            _categories.Add(new Category(description, this));
         }
     }
 }

@@ -5,8 +5,7 @@ namespace Desorganizze.Infra.Migrations
     [Migration(6)]
     public class CreateWalletsForExistingUsers : ForwardOnlyMigration
     {
-        public override void Up()
-        {
+        public override void Up() => 
             Execute.Sql(@"CREATE OR REPLACE FUNCTION create_wallets() RETURNS setof bigint
                             language plpgsql as $$
                         DECLARE 
@@ -20,6 +19,5 @@ namespace Desorganizze.Infra.Migrations
                         END $$;
 							
                         select create_wallets();");
-        }
     }
 }

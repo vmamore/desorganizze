@@ -106,5 +106,15 @@
 
             return Ok();
         }
+
+        [HttpPost("categories")]
+        public async Task<IActionResult> CreateNewCategory([FromRoute] string walletId, [FromBody] NewCategoryDto newCategoryDto)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var resultado = await _commandDispatcher.ExecuteAsync(new CreateCategory(walletId, newCategoryDto.Description));
+
+            return Created(string.Empty, resultado.ReturnDto);
+        }
     }
 }

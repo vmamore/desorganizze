@@ -15,6 +15,9 @@ namespace Desorganizze.Infra.Mappings
             References(x => x.Account)
                 .Class<Account>()
                 .Column("account_id");
+            References(x => x.Category)
+                .Class<Category>()
+                .Column("category_id");
             Component(x => x.TotalAmount, m =>
             {
                 m.Map(x => x.Amount, "money_amount");

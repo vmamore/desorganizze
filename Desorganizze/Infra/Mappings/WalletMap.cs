@@ -16,6 +16,11 @@ namespace Desorganizze.Infra.Mappings
                 .KeyColumn("wallet_id")
                 .Inverse()
                 .Cascade.SaveUpdate();
+            HasMany(x => x.Categories)
+                .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore)
+                .KeyColumn("wallet_id")
+                .Inverse()
+                .Cascade.SaveUpdate();
             Table("wallets");
         }
     }

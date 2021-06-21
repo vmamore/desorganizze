@@ -22,9 +22,6 @@ namespace Desorganizze.Infra.Migrations
                            first_name = "Vinícius",
                            last_name = "Mamoré" });
         }
-        public override void Down()
-        {
-            Delete.Table("users");
-        }
+        public override void Down() => Delete.Table("users");
     }
 }

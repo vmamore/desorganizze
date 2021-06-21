@@ -13,6 +13,7 @@ namespace Desorganizze.Domain
         public virtual Wallet Wallet { get; protected set; }
         private readonly IList<Transaction> _transactions;
         public virtual IReadOnlyCollection<Transaction> Transactions => new ReadOnlyCollection<Transaction>(_transactions);
+        
 
         public virtual Money GetBalance
         {
