@@ -3,6 +3,7 @@ using FluentAssertions;
 using FunctionalTests.Desorganizze.Clients;
 using FunctionalTests.Desorganizze.Utils;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -41,14 +42,16 @@ namespace FunctionalTests.Desorganizze.Controllers.Users
             };
 
             var response = await _userClient.CreateUserAsync(inputModel);
-            var contentDeserialized = await DeserializeAsync<PostUserResponse>(response);
 
             response.EnsureSuccessStatusCode();
-            contentDeserialized.Username.Should().Be(inputModel.username);
-            contentDeserialized.CPF.Should().Be(inputModel.cpf);
-            contentDeserialized.FirstName.Should().Be(inputModel.firstname);
-            contentDeserialized.LastName.Should().Be(inputModel.lastname);
-            contentDeserialized.Password.Should().BeNull();
+
+            await using var responseBody = await response.Content.ReadAsStreamAsync();
+            var bodyData = await JsonDocument.ParseAsync(responseBody);
+            bodyData.RootElement.GetProperty("username").GetString().Should().Be(inputModel.username);
+            bodyData.RootElement.GetProperty("cpf").GetString().Should().Be(inputModel.cpf);
+            bodyData.RootElement.GetProperty("firstName").GetString().Should().Be(inputModel.firstname);
+            bodyData.RootElement.GetProperty("lastName").GetString().Should().Be(inputModel.lastname);
+            bodyData.RootElement.TryGetProperty("password", out _).Should().BeFalse();
         }
 
         [Fact]
