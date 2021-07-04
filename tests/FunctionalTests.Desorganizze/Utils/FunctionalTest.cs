@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NHibernate;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FunctionalTests.Desorganizze.Utils
 {
-    public abstract class FunctionalTest
+    public abstract class FunctionalTest : IDisposable
     {
         private ServerFixture _server;
         public FunctionalTest(ServerFixture serverFixture)
@@ -26,6 +29,13 @@ namespace FunctionalTests.Desorganizze.Utils
         protected async Task<HttpResponseMessage> GetAsync(string endpoint)
         {
             return await _server.Client.GetAsync(endpoint);
+        }
+
+        public void Dispose()
+        {
+            var session = _server.Services.GetRequiredService<ISession>();
+            var transactionsDeleteCount = session.CreateSQLQuery("DELETE FROM transactions").ExecuteUpdate();
+            var accountsDeleteCount = session.CreateSQLQuery("DELETE FROM accounts").ExecuteUpdate();
         }
     }
 }

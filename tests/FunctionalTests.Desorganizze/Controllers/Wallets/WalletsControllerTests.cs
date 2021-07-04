@@ -70,7 +70,8 @@ namespace FunctionalTests.Desorganizze.Controllers.Wallets
             var inputTransactionModel = new
             {
                 Amount = 1000.0m,
-                Type = (int)TransactionType.Add
+                Type = (int)TransactionType.Add,
+                CategoryId = "8418db28-d240-11eb-b8bc-0242ac130003"
             };
 
             // Act
@@ -102,7 +103,8 @@ namespace FunctionalTests.Desorganizze.Controllers.Wallets
             var inputTransactionModel = new
             {
                 Amount = 1000.0m,
-                Type = (int)TransactionType.Add
+                Type = (int)TransactionType.Add,
+                CategoryId = "8418db28-d240-11eb-b8bc-0242ac130003"
             };
             await _walletClient.CreateNewTransaction(wallet.WalletId, newAccountResponseOneDto.Id, inputTransactionModel);
             var inputModel = new
@@ -166,7 +168,8 @@ namespace FunctionalTests.Desorganizze.Controllers.Wallets
             var inputTransactionModel = new
             {
                 Amount = 1000.0m,
-                Type = (int)TransactionType.Add
+                Type = (int)TransactionType.Add,
+                CategoryId = "8418db28-d240-11eb-b8bc-0242ac130003"
             };
 
             await _walletClient.CreateNewTransaction(wallet.WalletId, newAccountResponseDto.Id, inputTransactionModel);

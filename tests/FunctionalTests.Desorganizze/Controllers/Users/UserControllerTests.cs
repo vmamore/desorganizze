@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Bogus;
+using FluentAssertions;
 using FunctionalTests.Desorganizze.Clients;
 using FunctionalTests.Desorganizze.Utils;
 using System.Net;
@@ -32,7 +33,7 @@ namespace FunctionalTests.Desorganizze.Controllers.Users
         {
             var inputModel = new
             {
-                username = "mariab",
+                username = new Faker().Person.LastName + "test",
                 password = "m@r1ab",
                 cpf = "45540096029",
                 firstname = "Maria",

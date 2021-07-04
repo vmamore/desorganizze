@@ -14,6 +14,8 @@ namespace FunctionalTests.Desorganizze.Utils
     {
         public HttpClient Client { get; private set; }
 
+        public IServiceProvider Services { get; private set; }
+
         public ServerFixture()
         {
             CreateWebHost();
@@ -39,6 +41,8 @@ namespace FunctionalTests.Desorganizze.Utils
                 });
 
             var host = hostBuilder.Start();
+
+            Services = host.GetTestServer().Services;
 
             Client = host.GetTestClient();
         }
