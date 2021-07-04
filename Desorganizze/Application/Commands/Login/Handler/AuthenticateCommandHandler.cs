@@ -22,7 +22,7 @@ namespace Desorganizze.Application.Commands.Login.Handler
             var userPersisted = await _userRepository.GetUserByUsernameAndPasswordAsync(command.Username, command.Password);
 
             if (userPersisted == null)
-                return Result.Fail($"{command.Username} não existe.");
+                return Result.Fail($"{command.Username} does not exist.");
 
             var token = TokenService.GenerateToken(userPersisted);
 

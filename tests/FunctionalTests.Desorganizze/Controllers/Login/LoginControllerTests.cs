@@ -50,7 +50,7 @@ namespace FunctionalTests.Desorganizze.Controllers.Login
             var responseMessage = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            responseMessage.Should().Be($"{model.username} não existe.");
+            responseMessage.Should().Be($"{model.username} does not exist.");
         }
 
 

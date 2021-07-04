@@ -16,24 +16,21 @@ namespace Desorganizze.Application.Queries.Users.Processors
     {
         private readonly ISession _session;
 
-        public UserQueryHandler(ISession session)
-        {
-            _session = session;
-        }
+        public UserQueryHandler(ISession session) => _session = session;
 
         public async Task<UserDtoItem> ExecuteQueryAsync(GetUserById queryParameter) =>
         await _session.Query<User>()
                 .Where(x => x.Id == queryParameter.Id)
                 .Select(x => new UserDtoItem
                 {
-                    Username = x.Username.Valor
+                    Username = x.Username.Value
                 })
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<UserDtoItem>> ExecuteQueryAsync(GetAllUsers queryParameter) =>
             await _session
                 .Query<User>()
-                .Select(x => new UserDtoItem { Id = x.Id, Username = x.Username.Valor })
+                .Select(x => new UserDtoItem { Id = x.Id, Username = x.Username.Value })
                 .ToListAsync();
     }
 }

@@ -4,12 +4,8 @@ namespace Desorganizze.Domain
 {
     public class InvalidSizeException : Exception
     {
-        public InvalidSizeException()
-        {
-        }
+        public InvalidSizeException() {}
 
-        public InvalidSizeException(string message) : base(message)
-        {
-        }
+        public InvalidSizeException(string message) : base(message) {}
     }
 }

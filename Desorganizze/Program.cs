@@ -10,14 +10,16 @@ namespace Desorganizze
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
+            var loggerConfiguration = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Seq("http://desorganizze_seq:5341")
-                .CreateLogger();
+                .WriteTo.Console();
 
-            Serilog.Debugging.SelfLog.Enable(Console.Error);
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (environment == Environments.Development)
+                loggerConfiguration = loggerConfiguration.WriteTo.Seq("http://desorganizze_seq:5341");
+
+            Log.Logger = loggerConfiguration.CreateLogger();
 
             try
             {

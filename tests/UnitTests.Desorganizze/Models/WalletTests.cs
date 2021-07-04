@@ -31,7 +31,7 @@ namespace UnitTests.Desorganizze.Models
             var account = wallet.NewAccount(accountName);
 
             account.Wallet.Should().Be(wallet);
-            account.Name.Valor.Should().Be(accountName);
+            account.Name.Value.Should().Be(accountName);
         }
 
         [Fact]

@@ -20,10 +20,7 @@ namespace Desorganizze.Domain.ValueObjects
             this.LastName = lastName;
         }
 
-        public static Name Create(string firstName, string lastName)
-        {
-            return new Name(firstName, lastName);
-        }
+        public static Name Create(string firstName, string lastName) => new Name(firstName, lastName);
 
         public override string ToString() => $"{FirstName} {LastName}";
     }

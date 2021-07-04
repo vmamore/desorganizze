@@ -4,12 +4,8 @@ namespace Desorganizze.Domain
 {
     public class AccountCannotHaveNegativeBalance : Exception
     {
-        public AccountCannotHaveNegativeBalance()
-        {
-        }
+        public AccountCannotHaveNegativeBalance() {}
 
-        public AccountCannotHaveNegativeBalance(string message) : base(message)
-        {
-        }
+        public AccountCannotHaveNegativeBalance(string message) : base(message) {}
     }
 }

@@ -4,23 +4,23 @@ namespace Desorganizze.Domain.ValueObjects
 {
     public class Username
     {
-        private const int TAMANHO_MAXIMO_PERMITIDO = 256;
-        public virtual string Valor { get; private set; }
+        private const int MAX_VALUE_ALLOWED = 256;
+        public virtual string Value { get; private set; }
         private Username() { }
-        private Username(string valor)
+        private Username(string value)
         {
-            if (string.IsNullOrEmpty(valor))
-                throw new ArgumentNullException(nameof(valor));
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
 
-            if(valor.Length > TAMANHO_MAXIMO_PERMITIDO)
-                throw new InvalidSizeException($"{nameof(valor)} cannot be bigger than {TAMANHO_MAXIMO_PERMITIDO}");
+            if(value.Length > MAX_VALUE_ALLOWED)
+                throw new InvalidSizeException($"{nameof(value)} cannot be bigger than {MAX_VALUE_ALLOWED}");
 
-            this.Valor = valor;
+            this.Value = value;
         }
 
         public static Username Create(string username) => new Username(username);
 
-        public override string ToString() => Valor;
+        public override string ToString() => Value;
 
         public override bool Equals(object obj)
         {
@@ -28,7 +28,7 @@ namespace Desorganizze.Domain.ValueObjects
 
             if (username is null) return false;
 
-            return this.Valor == username.Valor;
+            return this.Value == username.Value;
         }
     }
 }

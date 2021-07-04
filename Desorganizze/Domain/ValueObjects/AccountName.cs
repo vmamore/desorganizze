@@ -4,18 +4,18 @@ namespace Desorganizze.Domain.ValueObjects
 {
     public class AccountName
     {
-        public virtual string Valor { get; private set; }
+        public virtual string Value { get; private set; }
 
         private AccountName() { }
-        private AccountName(string valor)
+        private AccountName(string value)
         {
-            if (string.IsNullOrEmpty(valor))
-                throw new ArgumentNullException(nameof(valor));
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
 
-            this.Valor = valor;
+            this.Value = value;
         }
 
-        public static AccountName Create(string valor) => new AccountName(valor);
+        public static AccountName Create(string value) => new AccountName(value);
 
         public override bool Equals(object obj)
         {
@@ -23,9 +23,9 @@ namespace Desorganizze.Domain.ValueObjects
 
             if (accountName is null) return false;
 
-            return this.Valor.Equals(accountName.Valor);
+            return this.Value.Equals(accountName.Value);
         }
 
-        public override string ToString() => Valor;
+        public override string ToString() => Value;
     }
 }

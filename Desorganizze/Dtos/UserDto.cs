@@ -4,19 +4,19 @@ namespace Desorganizze.Dtos
 {
     public class UserDto
     {
-        [Required(ErrorMessage = "É obrigatório preencher o username")]
+        [Required]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório preencher a senha")]
+        [Required]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório preencher o CPF")]
+        [Required]
         public string CPF { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório preencher o nome")]
+        [Required]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório preencher o sobrenome")]
+        [Required]
         public string LastName { get; set; }
     }
 }

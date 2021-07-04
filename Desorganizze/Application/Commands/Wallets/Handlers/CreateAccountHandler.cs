@@ -32,7 +32,7 @@ namespace Desorganizze.Application.Commands.Wallets.Handlers
             return Result.Ok(new
             {
                Id = newAccount.Id,
-               Name = newAccount.Name.Valor
+               Name = newAccount.Name.Value
             });
         }
     }

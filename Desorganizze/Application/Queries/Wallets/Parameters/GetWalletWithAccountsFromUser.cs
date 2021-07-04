@@ -5,10 +5,7 @@ namespace Desorganizze.Application.Queries.Wallets.Parameters
 {
     public class GetWalletWithAccountsFromUser : IQuery
     {
-        public GetWalletWithAccountsFromUser(int userId)
-        {
-            UserId = userId;
-        }
+        public GetWalletWithAccountsFromUser(int userId) => UserId = userId;
 
         public int UserId { get; }
     }

@@ -18,7 +18,7 @@ namespace UnitTests.Desorganizze.ValueObjects
 
             var cpf = CPF.Create(cpfValue);
 
-            cpf.Valor.Should().Be(cpfValue);
+            cpf.Value.Should().Be(cpfValue);
         }
 
         [Fact]

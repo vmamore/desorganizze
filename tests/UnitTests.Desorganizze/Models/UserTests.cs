@@ -24,9 +24,9 @@ namespace UnitTests.Desorganizze.Models
 
             user.Name.FirstName.Should().Be(firstName);
             user.Name.LastName.Should().Be(lastName);
-            user.CPF.Valor.Should().Be(cpf);
-            user.Password.Valor.Should().Be(password);
-            user.Username.Valor.Should().Be(username);
+            user.CPF.Value.Should().Be(cpf);
+            user.Password.Value.Should().Be(password);
+            user.Username.Value.Should().Be(username);
         }
     }
 }

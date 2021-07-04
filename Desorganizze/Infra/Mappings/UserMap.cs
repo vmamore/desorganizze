@@ -11,15 +11,15 @@ namespace Desorganizze.Infra.Mappings
 
             Component(x => x.Password, m =>
             {
-                m.Map(x => x.Valor, "password");
+                m.Map(x => x.Value, "password");
             });
             Component(x => x.Username, m =>
             {
-                m.Map(x => x.Valor, "username");
+                m.Map(x => x.Value, "username");
             });
             Component(x => x.CPF, m =>
             {
-                m.Map(x => x.Valor, "cpf");
+                m.Map(x => x.Value, "cpf");
             });
             Component(x => x.Name, m =>
             {

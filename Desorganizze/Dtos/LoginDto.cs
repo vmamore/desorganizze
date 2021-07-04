@@ -4,10 +4,10 @@ namespace Desorganizze.Dtos
 {
     public class LoginDto
     {
-        [Required(ErrorMessage = "É obrigatório preencher o username")]
+        [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório preencher a senha")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
     }
 }

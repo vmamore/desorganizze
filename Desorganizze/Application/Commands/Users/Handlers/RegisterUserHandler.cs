@@ -18,7 +18,7 @@ namespace Desorganizze.Application.Commands.Users.Handlers
         {
             var userPersisted = await _userRepository.GetUserByNameAsync(command.Username);
 
-            if (userPersisted != null) return Result.Fail($"{command.Username} já está sendo utilizado.");
+            if (userPersisted != null) return Result.Fail($"{command.Username} is already been used.");
 
             var user = new User(
                 command.FirstName,

@@ -4,26 +4,23 @@ namespace Desorganizze.Domain.ValueObjects
 {
     public class CPF
     {
-        public virtual string Valor { get; private set; }
+        public virtual string Value { get; private set; }
         private CPF() { }
-        private CPF(string valor)
+        private CPF(string value)
         {
-            if (string.IsNullOrEmpty(valor))
-                throw new ArgumentNullException(nameof(valor));
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
 
-            if (!EhValido(valor))
-                throw new ArgumentException(nameof(valor));
+            if (!IsValid(value))
+                throw new ArgumentException(nameof(value));
 
-            this.Valor = valor;
+            this.Value = value;
         }
 
-        public static CPF Create(string cpf)
-        {
-            return new CPF(cpf);
-        }
+        public static CPF Create(string cpf) => new CPF(cpf);
 
-        private bool EhValido(string valor) => true;
+        private bool IsValid(string value) => true;
 
-        public override string ToString() => Valor;
+        public override string ToString() => Value;
     }
 }

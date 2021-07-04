@@ -13,7 +13,7 @@ namespace Desorganizze.Infra.Mappings
             References(x => x.Wallet, "wallet_id").Unique();
             Component(x => x.Name, m =>
             {
-                m.Map(x => x.Valor, "name");
+                m.Map(x => x.Value, "name");
             });
             HasMany(x => x.Transactions)
                 .Access.ReadOnlyPropertyThroughCamelCaseField(Prefix.Underscore)
