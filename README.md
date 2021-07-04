@@ -3,7 +3,14 @@
 <h1 align="center">Desorganizze</h1>
 Yes, another wallet app. 😅🥵
 
-<h2>Tecnologias utilizadas</h3>
+## 🚀 How to run
+```
+git clone https://github.com/vmamore/desorganizze.git
+cd desorganizze
+docker-compose up
+```
+
+## 🧪 Tecnologies
 <ul>
   <li>ASP .NET Core 3.1</li>
   <li>PostgreSQL </li>
@@ -11,7 +18,7 @@ Yes, another wallet app. 😅🥵
   <li>Seq </li>
 </ul>
 
-<h2>Libs utilizadas</h3>
+## 🔖 Libraries
 <ul>
   <li>NHibernate</li>
   <li>Fluent NHibernate</li>
@@ -22,9 +29,3 @@ Yes, another wallet app. 😅🥵
   <li>Fluent Assertions</li>
   <li>Serilog</li>
 </ul>
-
-
-
-
-
-
